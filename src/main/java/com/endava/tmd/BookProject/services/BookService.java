@@ -2,7 +2,6 @@ package com.endava.tmd.BookProject.services;
 
 
 import com.endava.tmd.BookProject.models.Book;
-import com.endava.tmd.BookProject.models.ForRentBook;
 import com.endava.tmd.BookProject.repositories.BookRepository;
 import com.endava.tmd.BookProject.repositories.ForRentBookRepository;
 import org.springframework.beans.BeanUtils;

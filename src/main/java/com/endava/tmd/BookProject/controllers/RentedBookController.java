@@ -2,7 +2,6 @@ package com.endava.tmd.BookProject.controllers;
 
 import com.endava.tmd.BookProject.models.RentedBook;
 import com.endava.tmd.BookProject.services.RentedBookService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +30,18 @@ public class RentedBookController {
         return rentedBookService.getAllRentedBooks();
     }
 
-    @RequestMapping(params="book_owner_user_id",method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/bookOwnerUserID", params="book_owner_user_id",method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getRentedBooksByBookUserId(@RequestParam("book_owner_user_id") Long user_id){
         return rentedBookService.getRentedBooksByBookUserId(user_id);
+    }
+
+    @RequestMapping(value = "/extendBookRentPeriod",params = "rented_book_id", method = RequestMethod.PUT)
+    public void extendBookRentPeriod(@RequestParam("rented_book_id") Long rented_book_id){
+        rentedBookService.extendBookRentPeriod(rented_book_id);
+    }
+
+    @RequestMapping(value="/borrowerUserID", params="user_id",method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUsersRentedBooks(@RequestParam("user_id") Long user_id){
+        return rentedBookService.getUsersRentedBooks(user_id);
     }
 }

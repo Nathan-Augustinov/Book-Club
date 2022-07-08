@@ -1,6 +1,5 @@
 package com.endava.tmd.BookProject.services;
 
-import com.endava.tmd.BookProject.models.Book;
 import com.endava.tmd.BookProject.models.User;
 import com.endava.tmd.BookProject.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
