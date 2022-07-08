@@ -57,11 +57,11 @@ public class RentedBookService {
         List<JSONObject> responseList = new ArrayList<>();
         for (RentedBook rentedBook : rentedBooksByBookUserIdList) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("Book's title",rentedBook.getForRentBook().getUsersBooks().getBook().getTitle());
-            jsonObject.put("Book's author",rentedBook.getForRentBook().getUsersBooks().getBook().getAuthor());
-            jsonObject.put("Return date",rentedBook.getReturnDate());
-            jsonObject.put("Renter's firstname",rentedBook.getRent_user().getFirstname());
-            jsonObject.put("Renter's lastname", rentedBook.getRent_user().getLastname());
+            jsonObject.put("BookTitle",rentedBook.getForRentBook().getUsersBooks().getBook().getTitle());
+            jsonObject.put("BookAuthor",rentedBook.getForRentBook().getUsersBooks().getBook().getAuthor());
+            jsonObject.put("ReturnDate",rentedBook.getReturnDate());
+            jsonObject.put("BorrowerFirstname",rentedBook.getRent_user().getFirstname());
+            jsonObject.put("BorrowerLastname", rentedBook.getRent_user().getLastname());
             responseList.add(jsonObject);
         }
         return ResponseEntity.status(HttpStatus.OK).body(responseList.toString());
