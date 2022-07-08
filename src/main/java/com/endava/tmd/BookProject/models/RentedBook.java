@@ -29,4 +29,32 @@ public class RentedBook {
 
     @Column(nullable = false)
     private LocalDate returnDate;
+
+    public ForRentBook getForRentBook() {
+        return forRentBook;
+    }
+
+    public void setForRentBook(ForRentBook forRentBook) {
+        this.forRentBook = forRentBook;
+    }
+
+    public Long getRented_book_id() {
+        return rented_book_id;
+    }
+
+    public User getRent_user() {
+        return rent_user;
+    }
+
+    public void setRent_user(User rent_user) {
+        this.rent_user = rent_user;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
 }

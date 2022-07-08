@@ -24,4 +24,24 @@ public class WaitingList {
     @ManyToOne
     @JoinColumn(name = "users_books_id")
     private UsersBooks usersBooks;
+
+    public User getUser() {
+        return user;
+    }
+
+    public Long getWaiting_list_id() {
+        return waiting_list_id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public UsersBooks getUsersBooks() {
+        return usersBooks;
+    }
+
+    public void setUsersBooks(UsersBooks usersBooks) {
+        this.usersBooks = usersBooks;
+    }
 }

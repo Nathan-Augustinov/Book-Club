@@ -1,15 +1,22 @@
 package com.endava.tmd.BookProject.services;
 
+import com.endava.tmd.BookProject.models.ExtendRentPeriod;
 import com.endava.tmd.BookProject.models.RentPeriod;
 import com.endava.tmd.BookProject.models.RentedBook;
 import com.endava.tmd.BookProject.repositories.ForRentBookRepository;
 import com.endava.tmd.BookProject.repositories.RentedBookRepository;
 import com.endava.tmd.BookProject.repositories.UserRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class RentedBookService {
@@ -23,32 +30,8 @@ public class RentedBookService {
     @Autowired
     private ForRentBookRepository forRentBookRepository;
 
-    /*public void rentBook(Long user_id, Long book_id){
-        RentPeriod currentRentPeriod = forRentBookRepository.getRentPeriodFromUsersBookId(user_id, book_id);
-        System.out.println(currentRentPeriod);
-        RentPeriod newRentPeriod;
-        if(currentRentPeriod == null){
-            newRentPeriod = RentPeriod.ONE_WEEK;
-            forRentBookRepository.updateRentPeriod(newRentPeriod,user_id,book_id);
-        }
-        else{
-            newRentPeriod=currentRentPeriod;
-        }
-        System.out.println(newRentPeriod);
-        RentedBook newRentedBook = new RentedBook(null,forRentBookRepository.findById(book_id).get(),userRepository.findById(user_id).get(), LocalDate.now().plus(RentedBookService.transformRentPeriodInTime(newRentPeriod)));
-        rentedBookRepository.saveAndFlush(newRentedBook);
-    }*/
     public void rentBook(Long for_rent_book_id, Long renting_user_id){
-        /*RentPeriod currentRentPeriod = forRentBookRepository.getRentPeriodFromId(for_rent_book_id);
-        RentPeriod newRentPeriod;
-        if(currentRentPeriod == null){
-            newRentPeriod = RentPeriod.ONE_WEEK;
-            forRentBookRepository.updateRentPeriod(newRentPeriod,for_rent_book_id);
-        }
-        else{
-            newRentPeriod=currentRentPeriod;
-        }*/
-        RentPeriod newRentPeriod = RentPeriod.ONE_WEEK;
+        RentPeriod newRentPeriod = RentPeriod.ONE_MONTH;
         forRentBookRepository.updateRentPeriod(newRentPeriod,for_rent_book_id);
         RentedBook newRentedBook = new RentedBook(null,forRentBookRepository.findById(for_rent_book_id).get(),userRepository.findById(renting_user_id).get(), LocalDate.now().plus(RentedBookService.transformRentPeriodInTime(newRentPeriod)));
         rentedBookRepository.saveAndFlush(newRentedBook);
@@ -64,4 +47,30 @@ public class RentedBookService {
         else
             return Period.of(0,1,0);
     }
+
+    public List<RentedBook> getAllRentedBooks(){
+        return rentedBookRepository.findAll();
+    }
+
+    public ResponseEntity<?> getRentedBooksByBookUserId(Long user_id) {
+        List<RentedBook> rentedBooksByBookUserIdList = rentedBookRepository.getRentedBooksByBookUserId(user_id);
+        List<JSONObject> responseList = new ArrayList<>();
+        for (RentedBook rentedBook : rentedBooksByBookUserIdList) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Book's title",rentedBook.getForRentBook().getUsersBooks().getBook().getTitle());
+            jsonObject.put("Book's author",rentedBook.getForRentBook().getUsersBooks().getBook().getAuthor());
+            jsonObject.put("Return date",rentedBook.getReturnDate());
+            jsonObject.put("Renter's firstname",rentedBook.getRent_user().getFirstname());
+            jsonObject.put("Renter's lastname", rentedBook.getRent_user().getLastname());
+            responseList.add(jsonObject);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(responseList.toString());
+    }
+
+    /*public void extendBookRentPeriod(Long rented_book_id, Long renting_user_id){
+        ExtendRentPeriod extendRentPeriod = ExtendRentPeriod.ONE_WEEK;
+        Long for_rent_book_id = rentedBookRepository.findById(rented_book_id).get().getForRentBook().getFor_rent_book_id();
+        forRentBookRepository.updateExtendedRentPeriod(for_rent_book_id, extendRentPeriod);
+    }*/
+
 }

@@ -33,7 +33,39 @@ public class Book {
     @Column(nullable = false)
     private LocalDate published_date;
 
-    /*@OneToMany(mappedBy = "book")
-    private List<UsersBooks> usersBooksList;*/
+    public Long getBook_id() {
+        return book_id;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getPublished_date() {
+        return published_date;
+    }
+
+    public void setPublished_date(LocalDate published_date) {
+        this.published_date = published_date;
+    }
 }

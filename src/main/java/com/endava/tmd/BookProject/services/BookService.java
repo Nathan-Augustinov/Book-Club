@@ -2,7 +2,9 @@ package com.endava.tmd.BookProject.services;
 
 
 import com.endava.tmd.BookProject.models.Book;
+import com.endava.tmd.BookProject.models.ForRentBook;
 import com.endava.tmd.BookProject.repositories.BookRepository;
+import com.endava.tmd.BookProject.repositories.ForRentBookRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,10 @@ import java.util.Optional;
 public class BookService {
     @Autowired
     private BookRepository repository;
+
+    @Autowired
+    private ForRentBookRepository forRentBookRepository;
+
     public List<Book> getAllBooks(){
         return repository.findAll();
     }
@@ -36,8 +42,8 @@ public class BookService {
         repository.saveAndFlush(existingBook);
     }
 
-    public Book getBookByTitleOrAuthor(Optional<String> title, Optional<String> author){
-        return repository.getBookByTitleOrAuthor(title,author);
+    public List<Book> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author){
+        return repository.getBooksByTitleOrAuthor(title,author);
     }
 
 

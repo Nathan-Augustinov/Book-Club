@@ -35,4 +35,8 @@ public class UsersBooksService {
         usersBooksRepository.saveAndFlush(entry);
         forRentBookRepository.saveAndFlush(new ForRentBook(null,entry,null,null,true));
     }
+
+    public List<Book> getUsersBookByUserId(Long user_id){
+        return usersBooksRepository.getUsersBooksByUserId(user_id);
+    }
 }

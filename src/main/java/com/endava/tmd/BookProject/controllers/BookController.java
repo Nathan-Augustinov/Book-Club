@@ -1,6 +1,7 @@
 package com.endava.tmd.BookProject.controllers;
 
 import com.endava.tmd.BookProject.models.Book;
+import com.endava.tmd.BookProject.models.ForRentBook;
 import com.endava.tmd.BookProject.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,8 @@ public class BookController {
     }
 
     @RequestMapping(value = "/TitleOrAuthor", method = RequestMethod.GET)
-    public Book getBookByTitleOrAuthor(@RequestParam(value = "title") Optional<String> title, @RequestParam(value="author") Optional<String> author){
-        return bookService.getBookByTitleOrAuthor(title,author);
+    public List<Book> getBooksByTitleOrAuthor(@RequestParam(value = "title") Optional<String> title, @RequestParam(value="author") Optional<String> author){
+        return bookService.getBooksByTitleOrAuthor(title,author);
     }
+
 }
