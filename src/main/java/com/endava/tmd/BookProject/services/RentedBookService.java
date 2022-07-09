@@ -1,17 +1,17 @@
 package com.endava.tmd.BookProject.services;
 
-import com.endava.tmd.BookProject.models.ExtendRentPeriod;
-import com.endava.tmd.BookProject.models.RentPeriod;
-import com.endava.tmd.BookProject.models.RentedBook;
-import com.endava.tmd.BookProject.models.WaitingList;
+import com.endava.tmd.BookProject.models.*;
 import com.endava.tmd.BookProject.repositories.ForRentBookRepository;
 import com.endava.tmd.BookProject.repositories.RentedBookRepository;
 import com.endava.tmd.BookProject.repositories.UserRepository;
 import com.endava.tmd.BookProject.repositories.WaitingListRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,6 +19,8 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
+@Configuration
+@EnableScheduling
 @Service
 public class RentedBookService {
 
@@ -34,18 +36,56 @@ public class RentedBookService {
     @Autowired
     private WaitingListRepository waitingListRepository;
 
-    public void rentBook(Long for_rent_book_id, Long renting_user_id){
-        Boolean rentingAvailable = forRentBookRepository.findById(for_rent_book_id).get().getAvailable_for_renting();
+    public void addIntoTheWaitingList(Long for_rent_book_id, Long renting_user_id){
+        WaitingList newWaitingListEntry = new WaitingList(null,userRepository.findById(renting_user_id).get(),forRentBookRepository.findById(for_rent_book_id).get().getUsersBooks());
+        waitingListRepository.saveAndFlush(newWaitingListEntry);
+    }
+
+    public void addIntoTheRentedBooks(Long for_rent_book_id, Long renting_user_id){
+        RentPeriod newRentPeriod = RentPeriod.ONE_MONTH;
+        forRentBookRepository.updateRentPeriod(newRentPeriod,for_rent_book_id);
+        RentedBook newRentedBook = new RentedBook(null,forRentBookRepository.findById(for_rent_book_id).get(),userRepository.findById(renting_user_id).get(), LocalDate.now().plus(RentedBookService.transformRentPeriodInTime(newRentPeriod)));
+        rentedBookRepository.saveAndFlush(newRentedBook);
+        forRentBookRepository.updateAvailabilityStatus(for_rent_book_id);
+    }
+    @Scheduled(cron = "0 0 0 * * *")
+    public void rentBookToWaitingListUserWhenReturnDateIsDue(){
+        List<RentedBook> rentedBooks = rentedBookRepository.findAll();
+        for (RentedBook rentedBook : rentedBooks) {
+            if(rentedBook.getReturnDate().equals(LocalDate.now().minusDays(1))){
+                Long forRentBookId = rentedBook.getForRentBook().getFor_rent_book_id();
+                UsersBooks usersBooks = rentedBook.getForRentBook().getUsersBooks();
+                forRentBookRepository.resetRentPeriodExtendRentPeriodAndAvailabilityStatus(forRentBookId);
+                rentedBookRepository.delete(rentedBook);
+                Long waitingListId = waitingListRepository.getFirstByUsersBooks(usersBooks).getWaiting_list_id();
+                Long nextUserId = waitingListRepository.getFirstByUsersBooks(usersBooks).getUser().getUser_id();
+                rentBook(forRentBookId,nextUserId);
+                waitingListRepository.deleteById(waitingListId);
+            }
+        }
+    }
+
+    public ResponseEntity<?> rentBook(Long for_rent_book_id, Long renting_user_id){
+        ForRentBook forRentBook = forRentBookRepository.findById(for_rent_book_id).orElse(null);
+        if(forRentBook == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("For rent book id not existing!");
+        }
+        Boolean rentingAvailable = forRentBook.getAvailable_for_renting();
         if(!rentingAvailable){
-            WaitingList newWaitingListEntry = new WaitingList(null,userRepository.findById(renting_user_id).get(),forRentBookRepository.findById(for_rent_book_id).get().getUsersBooks());
-            waitingListRepository.saveAndFlush(newWaitingListEntry);
+            Long existingRentUserId = rentedBookRepository.getRentedBookByForRentBook(forRentBook).getRent_user().getUser_id();
+            Long bookOwnerUserId = rentedBookRepository.getRentedBookByForRentBook(forRentBook).getForRentBook().getUsersBooks().getUser().getUser_id();
+            if(existingRentUserId.equals(renting_user_id)){
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("User already has the book borrowed!");
+            }
+            else if(renting_user_id.equals(bookOwnerUserId)){
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("User cannot borrow his own book!");
+            }
+            addIntoTheWaitingList(for_rent_book_id, renting_user_id);
+            return ResponseEntity.status(HttpStatus.OK).body("User is on the waiting list for borrowing the book.");
         }
         else{
-            RentPeriod newRentPeriod = RentPeriod.ONE_MONTH;
-            forRentBookRepository.updateRentPeriod(newRentPeriod,for_rent_book_id);
-            RentedBook newRentedBook = new RentedBook(null,forRentBookRepository.findById(for_rent_book_id).get(),userRepository.findById(renting_user_id).get(), LocalDate.now().plus(RentedBookService.transformRentPeriodInTime(newRentPeriod)));
-            rentedBookRepository.saveAndFlush(newRentedBook);
-            forRentBookRepository.updateAvailabilityStatus(for_rent_book_id);
+            addIntoTheRentedBooks(for_rent_book_id, renting_user_id);
+            return ResponseEntity.status(HttpStatus.OK).body("User successfully rented the book.");
         }
     }
     public static Period transformRentPeriodInTime(RentPeriod rentPeriod){
@@ -79,8 +119,7 @@ public class RentedBookService {
             jsonObject.put("BookTitle",rentedBook.getForRentBook().getUsersBooks().getBook().getTitle());
             jsonObject.put("BookAuthor",rentedBook.getForRentBook().getUsersBooks().getBook().getAuthor());
             jsonObject.put("ReturnDate",rentedBook.getReturnDate());
-            jsonObject.put("BorrowerFirstname",rentedBook.getRent_user().getFirstname());
-            jsonObject.put("BorrowerLastname", rentedBook.getRent_user().getLastname());
+            jsonObject.put("BorrowerName",rentedBook.getRent_user().getFirstname()+" "+rentedBook.getRent_user().getLastname());
             responseList.add(jsonObject);
         }
         return ResponseEntity.status(HttpStatus.OK).body(responseList.toString());

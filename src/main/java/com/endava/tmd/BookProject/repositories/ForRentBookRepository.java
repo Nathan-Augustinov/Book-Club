@@ -34,5 +34,10 @@ public interface ForRentBookRepository extends JpaRepository<ForRentBook, Long> 
     @Query("select fr from ForRentBook fr where fr.usersBooks.book.title = :title or fr.usersBooks.book.author= :author")
     List<ForRentBook> getForRentBooksByTitleOrAuthor(Optional<String> title, Optional<String> author);
 
+    @Transactional
+    @Modifying
+    @Query("update ForRentBook fr set fr.rent_period = null, fr.extend_rent_period = null, fr.available_for_renting = true where fr.for_rent_book_id = :for_rent_book_id")
+    void resetRentPeriodExtendRentPeriodAndAvailabilityStatus(Long for_rent_book_id);
+
 
 }

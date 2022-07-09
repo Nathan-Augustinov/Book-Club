@@ -32,8 +32,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void addUser(@RequestBody User user){
-        userService.addUser(user);
+    public ResponseEntity<?> addUser(@RequestBody User user){
+        return userService.addUser(user);
     }
 
     @RequestMapping(params = "user_id",method = RequestMethod.PUT)

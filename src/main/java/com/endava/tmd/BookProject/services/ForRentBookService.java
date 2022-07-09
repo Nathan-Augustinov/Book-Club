@@ -22,6 +22,10 @@ public class ForRentBookService {
     @Autowired
     private RentedBookRepository rentedBookRepository;
 
+    public List<ForRentBook> getAllForRentBooks(){
+        return forRentBookRepository.findAll();
+    }
+
     public List<ForRentBook> getAllBooksAvailableForRent(){
         return forRentBookRepository.getAllBooksAvailableForRent();
     }

@@ -20,8 +20,8 @@ public class UsersBooksController {
         return usersBooksService.getAllUsersBooks();
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/create/{user_id}")
-    public void createBookWithUserId(@PathVariable Long user_id, @RequestBody Book book){
+    @RequestMapping(params="user_id",method = RequestMethod.POST, value = "/addBook")
+    public void createBookWithUserId(@RequestParam Long user_id, @RequestBody Book book){
         usersBooksService.createBookWithUserId(user_id, book);
     }
     @RequestMapping(params = "user_id",method = RequestMethod.GET)

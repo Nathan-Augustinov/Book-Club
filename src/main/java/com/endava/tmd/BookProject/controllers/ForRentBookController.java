@@ -21,9 +21,14 @@ public class ForRentBookController {
     @Autowired
     private ForRentBookService forRentBookService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/availableBooks",method = RequestMethod.GET)
     public List<ForRentBook> getAllBooksAvailableForRent(){
         return forRentBookService.getAllBooksAvailableForRent();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<ForRentBook> getAllForRentBooks(){
+        return forRentBookService.getAllForRentBooks();
     }
 
     @RequestMapping(value = "/TitleOrAuthor", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)

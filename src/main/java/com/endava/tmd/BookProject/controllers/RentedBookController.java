@@ -20,9 +20,9 @@ public class RentedBookController {
     @Autowired
     private RentedBookService rentedBookService;
 
-    @RequestMapping(method = RequestMethod.POST)
-    public void rentBook(@RequestParam(value = "for_rent_book_id") Long for_rent_book_id, @RequestParam(value = "renting_user_id") Long renting_user_id){
-        rentedBookService.rentBook(for_rent_book_id, renting_user_id);
+    @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
+    public ResponseEntity<?> rentBook(@RequestParam(value = "for_rent_book_id") Long for_rent_book_id, @RequestParam(value = "renting_user_id") Long renting_user_id){
+        return rentedBookService.rentBook(for_rent_book_id, renting_user_id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
