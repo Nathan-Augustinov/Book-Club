@@ -6,8 +6,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 @Service
@@ -28,6 +30,13 @@ public class UserService {
         repository.deleteById(id);
     }
 
+    public String encodedPassword(String plainPassword){
+        int strength = 10;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(strength, new SecureRandom());
+        String encodedPassword = encoder.encode(plainPassword);
+        return encodedPassword;
+    }
+
     public ResponseEntity<?> addUser(User user){
         List<User> usersList = repository.findAll();
         for (User user1 : usersList) {
@@ -35,6 +44,7 @@ public class UserService {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists!");
             }
         }
+        user.setPassword(encodedPassword(user.getPassword()));
         repository.saveAndFlush(user);
         return ResponseEntity.status(HttpStatus.OK).body("User created successfully");
     }
