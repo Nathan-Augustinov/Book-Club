@@ -24,8 +24,9 @@ public class UsersBooksController {
     public void createBookWithUserId(@RequestParam Long user_id, @RequestBody Book book){
         usersBooksService.createBookWithUserId(user_id, book);
     }
-    @RequestMapping(params = "user_id",method = RequestMethod.GET)
-    public List<Book> getUsersBooksByUserId(@RequestParam("user_id") Long user_id){
+
+    @RequestMapping(value="/{user_id}",method = RequestMethod.GET)
+    public List<Book> getUsersBooksByUserId(@PathVariable Long user_id){
         return usersBooksService.getUsersBookByUserId(user_id);
     }
 

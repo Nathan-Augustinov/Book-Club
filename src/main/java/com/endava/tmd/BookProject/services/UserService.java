@@ -33,8 +33,7 @@ public class UserService {
     public String encodedPassword(String plainPassword){
         int strength = 10;
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(strength, new SecureRandom());
-        String encodedPassword = encoder.encode(plainPassword);
-        return encodedPassword;
+        return encoder.encode(plainPassword);
     }
 
     public ResponseEntity<?> addUser(User user){

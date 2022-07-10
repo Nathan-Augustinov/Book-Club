@@ -18,12 +18,13 @@ public class BookController {
     public BookService bookService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Book> getAllUsers(){
+    public List<Book> getAllBooks(){
         return bookService.getAllBooks();
     }
+    
+    @RequestMapping(value = "/{book_id}",method = RequestMethod.GET)
 
-    @RequestMapping(params = "book_id",method = RequestMethod.GET)
-    public Object getUserById(@RequestParam("book_id") Long id){
+    public Object getBookById(@PathVariable Long id){
         return bookService.getBookById(id)!=null ? bookService.getBookById(id) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

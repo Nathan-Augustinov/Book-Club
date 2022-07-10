@@ -21,11 +21,10 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @RequestMapping(params = "user_id",method = RequestMethod.GET)
-    public Object getUserById(@RequestParam("user_id") Long id){
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public Object getUserById(@PathVariable Long id){
         return userService.getUserById(id)!=null ? userService.getUserById(id) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
     @RequestMapping(params = "user_id", method = RequestMethod.DELETE)
     public void deleteUserById(@RequestParam("user_id") Long id){
         userService.deleteUserById(id);
