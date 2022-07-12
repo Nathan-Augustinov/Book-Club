@@ -3,6 +3,8 @@ package com.endava.tmd.BookProject.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,11 +23,13 @@ public class RentedBook {
             updatable = false)
     private Long rentedBookId;
 
-    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "for_rent_book_id")
     private ForRentBook forRentBook;
 
-    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "renter_user_id")
     private User rentUser;
 

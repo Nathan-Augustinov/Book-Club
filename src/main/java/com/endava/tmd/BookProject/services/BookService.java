@@ -64,7 +64,7 @@ public class BookService {
                     .status(HttpStatus.BAD_REQUEST)
                     .body("Book id given is not a correct one!");
         }
-        BeanUtils.copyProperties( book, existingBook,"book_id");
+        BeanUtils.copyProperties( book, existingBook,"bookId");
         bookRepository.saveAndFlush(existingBook);
         return ResponseEntity
                 .status(HttpStatus.OK)
