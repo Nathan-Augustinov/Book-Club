@@ -13,31 +13,31 @@ import java.util.Optional;
 
 public interface ForRentBookRepository extends JpaRepository<ForRentBook, Long> {
 
-    @Query("select fr from ForRentBook fr where fr.available_for_renting = true")
+    @Query("select fr from ForRentBook fr where fr.availableForRenting = true")
     List<ForRentBook> getAllBooksAvailableForRent();
 
     @Transactional
     @Modifying
-    @Query("update ForRentBook fr set fr.rent_period = :rentPeriod where fr.for_rent_book_id = :for_rent_book_id")
-    void updateRentPeriod(RentPeriod rentPeriod, Long for_rent_book_id);
+    @Query("update ForRentBook fr set fr.rentPeriod = :rentPeriod where fr.forRentBookId = :forRentBookId")
+    void updateRentPeriod(RentPeriod rentPeriod, Long forRentBookId);
 
     @Transactional
     @Modifying
-    @Query("update ForRentBook fr set fr.available_for_renting = false where fr.for_rent_book_id = :for_rent_book_id")
-    void updateAvailabilityStatus(Long for_rent_book_id);
+    @Query("update ForRentBook fr set fr.availableForRenting = false where fr.forRentBookId = :forRentBookId")
+    void updateAvailabilityStatus(Long forRentBookId);
 
     @Transactional
     @Modifying
-    @Query("update ForRentBook fr set fr.extend_rent_period = :extendRentPeriod where fr.for_rent_book_id = :for_rent_book_id")
-    void updateExtendedRentPeriod(Long for_rent_book_id, ExtendRentPeriod extendRentPeriod);
+    @Query("update ForRentBook fr set fr.extendRentPeriod = :extendRentPeriod where fr.forRentBookId = :forRentBookId")
+    void updateExtendedRentPeriod(Long forRentBookId, ExtendRentPeriod extendRentPeriod);
 
     @Query("select fr from ForRentBook fr where fr.usersBooks.book.title = :title or fr.usersBooks.book.author= :author")
     List<ForRentBook> getForRentBooksByTitleOrAuthor(Optional<String> title, Optional<String> author);
 
     @Transactional
     @Modifying
-    @Query("update ForRentBook fr set fr.rent_period = null, fr.extend_rent_period = null, fr.available_for_renting = true where fr.for_rent_book_id = :for_rent_book_id")
-    void resetRentPeriodExtendRentPeriodAndAvailabilityStatus(Long for_rent_book_id);
+    @Query("update ForRentBook fr set fr.rentPeriod = null, fr.extendRentPeriod = null, fr.availableForRenting = true where fr.forRentBookId = :forRentBookId")
+    void resetRentPeriodExtendRentPeriodAndAvailabilityStatus(Long forRentBookId);
 
 
 }

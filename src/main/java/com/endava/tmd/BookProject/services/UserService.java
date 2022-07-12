@@ -22,12 +22,12 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User getUserById(Long id){
-        return repository.findById(id).orElse(null);
+    public User getUserById(Long userId){
+        return repository.findById(userId).orElse(null);
     }
 
-    public void deleteUserById(Long id){
-        repository.deleteById(id);
+    public void deleteUserById(Long userId){
+        repository.deleteById(userId);
     }
 
     public String encodedPassword(String plainPassword){
@@ -48,9 +48,13 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.OK).body("User created successfully");
     }
 
-    public void updateUser(Long id, User user){
-        User existingUser = repository.findById(id).orElse(null);
+    public ResponseEntity<?> updateUser(Long userId, User user){
+        User existingUser = repository.findById(userId).orElse(null);
+        if(existingUser == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User id given not a correct one!");
+        }
         BeanUtils.copyProperties(user, existingUser, "user_id","created_on");
         repository.saveAndFlush(existingUser);
+        return ResponseEntity.status(HttpStatus.OK).body("User updated successfully!");
     }
 }

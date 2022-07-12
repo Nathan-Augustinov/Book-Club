@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("for_rent_books")
+@RequestMapping("forRentBooks")
 public class ForRentBookController {
 
     @Autowired
@@ -31,8 +31,13 @@ public class ForRentBookController {
         return forRentBookService.getAllForRentBooks();
     }
 
-    @RequestMapping(value = "/TitleOrAuthor", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/titleOrAuthor", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getForRentBooksByTitleOrAuthor(@RequestParam(value="title") Optional<String> title, @RequestParam(value = "author") Optional<String> author){
         return forRentBookService.getForRentBooksByTitleOrAuthor(title, author);
+    }
+
+    @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
+    public ResponseEntity<?> rentBook(@RequestParam(value = "forRentBookId") Long forRentBookId, @RequestParam(value = "rentingUserId") Long rentingUserId){
+        return forRentBookService.rentBook(forRentBookId, rentingUserId);
     }
 }

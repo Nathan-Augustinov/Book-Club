@@ -21,13 +21,13 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public Object getUserById(@PathVariable Long id){
-        return userService.getUserById(id)!=null ? userService.getUserById(id) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @RequestMapping(value = "/{userId}",method = RequestMethod.GET)
+    public Object getUserById(@PathVariable Long userId){
+        return userService.getUserById(userId)!=null ? userService.getUserById(userId) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @RequestMapping(params = "user_id", method = RequestMethod.DELETE)
-    public void deleteUserById(@RequestParam("user_id") Long id){
-        userService.deleteUserById(id);
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void deleteUserById(@RequestParam("userId") Long userId){
+        userService.deleteUserById(userId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -35,8 +35,8 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @RequestMapping(params = "user_id",method = RequestMethod.PUT)
-    public void updateUser(@RequestParam("user_id") Long id, @RequestBody User user){
-        userService.updateUser(id,user);
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> updateUser(@RequestParam("userId") Long userId, @RequestBody User user){
+        return userService.updateUser(userId,user);
     }
 }

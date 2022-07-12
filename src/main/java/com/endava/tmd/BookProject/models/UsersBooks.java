@@ -15,8 +15,8 @@ public class UsersBooks {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false, name = "users_books_id")
-    private Long users_books_id;
+    @Column(name="users_books_id", nullable = false, updatable = false)
+    private Long usersBooksId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,8 +34,8 @@ public class UsersBooks {
         this.user = user;
     }
 
-    public Long getUsers_books_id() {
-        return users_books_id;
+    public Long getUsersBooksId() {
+        return usersBooksId;
     }
 
     public Book getBook() {

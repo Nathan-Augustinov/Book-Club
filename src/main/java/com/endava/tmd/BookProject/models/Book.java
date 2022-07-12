@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 
 @Entity
@@ -18,23 +17,23 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-    private Long book_id;
+    @Column(name = "book_id", nullable = false, updatable = false)
+    private Long bookId;
 
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(name= "author", nullable = false)
     private String author;
 
-    @Column(nullable = false)
+    @Column(name= "description", nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private LocalDate published_date;
+    @Column(name="published_date", nullable = false)
+    private LocalDate publishedDate;
 
-    public Long getBook_id() {
-        return book_id;
+    public Long getBookId() {
+        return bookId;
     }
 
     public String getTitle() {
@@ -61,11 +60,11 @@ public class Book {
         this.description = description;
     }
 
-    public LocalDate getPublished_date() {
-        return published_date;
+    public LocalDate getPublishedDate() {
+        return publishedDate;
     }
 
-    public void setPublished_date(LocalDate published_date) {
-        this.published_date = published_date;
+    public void setPublishedDate(LocalDate published_date) {
+        this.publishedDate = published_date;
     }
 }

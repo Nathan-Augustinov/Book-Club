@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface UsersBooksRepository extends JpaRepository<UsersBooks, Long> {
 
-    @Query("select b from Book b where b.book_id in (select ub.book.book_id from UsersBooks ub where ub.user.user_id = :user_id)")
-    List<Book> getUsersBooksByUserId(Long user_id);
+    @Query("select b from Book b where b.bookId in (select ub.book.bookId from UsersBooks ub where ub.user.userId = :userId)")
+    List<Book> getUsersBooksByUserId(Long userId);
 }

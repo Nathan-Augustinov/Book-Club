@@ -12,16 +12,16 @@ import java.util.List;
 
 public interface RentedBookRepository extends JpaRepository<RentedBook, Long> {
 
-    @Query("select rb from RentedBook rb where rb.forRentBook.usersBooks.user.user_id = :user_id")
-    List<RentedBook> getRentedBooksByBookUserId(Long user_id);
+    @Query("select rb from RentedBook rb where rb.forRentBook.usersBooks.user.userId = :userId")
+    List<RentedBook> getRentedBooksByBookUserId(Long userId);
 
     @Transactional
     @Modifying
-    @Query("update RentedBook rb set rb.returnDate = :newReturnDate where rb.rented_book_id = :rented_book_id")
-    void extendReturnDate(Long rented_book_id, LocalDate newReturnDate);
+    @Query("update RentedBook rb set rb.returnDate = :newReturnDate where rb.rentedBookId = :rentedBookId")
+    void extendReturnDate(Long rentedBookId, LocalDate newReturnDate);
 
-    @Query("select rb from RentedBook rb where rb.rent_user.user_id = :user_id")
-    List<RentedBook> getUsersRentedBooks(Long user_id);
+    @Query("select rb from RentedBook rb where rb.rentUser.userId = :userId")
+    List<RentedBook> getUsersRentedBooks(Long userId);
 
     RentedBook getRentedBookByForRentBook(ForRentBook forRentBook);
 

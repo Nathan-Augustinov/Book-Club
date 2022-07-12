@@ -16,16 +16,16 @@ public class RentedBook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-    private Long rented_book_id;
+    @Column(name="rented_book_id", nullable = false, updatable = false)
+    private Long rentedBookId;
 
     @ManyToOne
     @JoinColumn(name = "for_rent_book_id")
     private ForRentBook forRentBook;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User rent_user;
+    @JoinColumn(name = "renter_user_id")
+    private User rentUser;
 
     @Column(nullable = false)
     private LocalDate returnDate;
@@ -38,16 +38,16 @@ public class RentedBook {
         this.forRentBook = forRentBook;
     }
 
-    public Long getRented_book_id() {
-        return rented_book_id;
+    public Long getRentedBookId() {
+        return rentedBookId;
     }
 
-    public User getRent_user() {
-        return rent_user;
+    public User getRentUser() {
+        return rentUser;
     }
 
-    public void setRent_user(User rent_user) {
-        this.rent_user = rent_user;
+    public void setRentUser(User rent_user) {
+        this.rentUser = rent_user;
     }
 
     public LocalDate getReturnDate() {

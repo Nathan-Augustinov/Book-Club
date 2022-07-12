@@ -14,24 +14,24 @@ import javax.persistence.*;
 public class ForRentBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-    private Long for_rent_book_id;
+    @Column(name="for_rent_book_id", nullable = false, updatable = false)
+    private Long forRentBookId;
 
     @OneToOne
     @JoinColumn(name = "users_books_id")
     private UsersBooks usersBooks;
 
-    @Column()
-    private RentPeriod rent_period;
+    @Column(name="rent_period")
+    private RentPeriod rentPeriod;
 
-    @Column()
-    private ExtendRentPeriod extend_rent_period;
+    @Column(name="extend_rent_period")
+    private ExtendRentPeriod extendRentPeriod;
 
-    @Column(columnDefinition = "boolean default true")
-    private Boolean available_for_renting;
+    @Column(name="available_for_renting", columnDefinition = "boolean default true")
+    private Boolean availableForRenting;
 
-    public Long getFor_rent_book_id() {
-        return for_rent_book_id;
+    public Long getForRentBookId() {
+        return forRentBookId;
     }
 
     public UsersBooks getUsersBooks() {
@@ -42,28 +42,28 @@ public class ForRentBook {
         this.usersBooks = usersBooks;
     }
 
-    public RentPeriod getRent_period() {
-        return rent_period;
+    public RentPeriod getRentPeriod() {
+        return rentPeriod;
     }
 
-    public void setRent_period(RentPeriod rent_period) {
-        this.rent_period = rent_period;
+    public void setRentPeriod(RentPeriod rent_period) {
+        this.rentPeriod = rent_period;
     }
 
-    public ExtendRentPeriod getExtend_rent_period() {
-        return extend_rent_period;
+    public ExtendRentPeriod getExtendRentPeriod() {
+        return extendRentPeriod;
     }
 
-    public void setExtend_rent_period(ExtendRentPeriod extend_rent_period) {
-        this.extend_rent_period = extend_rent_period;
+    public void setExtendRentPeriod(ExtendRentPeriod extend_rent_period) {
+        this.extendRentPeriod = extend_rent_period;
     }
 
-    public Boolean getAvailable_for_renting() {
-        return available_for_renting;
+    public Boolean getAvailableForRenting() {
+        return availableForRenting;
     }
 
-    public void setAvailable_for_renting(Boolean available_for_renting) {
-        this.available_for_renting = available_for_renting;
+    public void setAvailableForRenting(Boolean available_for_renting) {
+        this.availableForRenting = available_for_renting;
     }
 }
 

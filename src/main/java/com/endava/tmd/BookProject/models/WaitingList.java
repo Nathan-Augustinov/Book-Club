@@ -14,8 +14,8 @@ import javax.persistence.*;
 public class WaitingList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-    private Long waiting_list_id;
+    @Column(name="waiting_list_id", nullable = false, updatable = false)
+    private Long waitingListId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -29,8 +29,8 @@ public class WaitingList {
         return user;
     }
 
-    public Long getWaiting_list_id() {
-        return waiting_list_id;
+    public Long getWaitingListId() {
+        return waitingListId;
     }
 
     public void setUser(User user) {

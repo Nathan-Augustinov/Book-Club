@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("users-books")
+@RequestMapping("usersBooks")
 public class UsersBooksController {
 
     @Autowired
@@ -20,14 +20,9 @@ public class UsersBooksController {
         return usersBooksService.getAllUsersBooks();
     }
 
-    @RequestMapping(params="user_id",method = RequestMethod.POST, value = "/addBook")
-    public void createBookWithUserId(@RequestParam Long user_id, @RequestBody Book book){
-        usersBooksService.createBookWithUserId(user_id, book);
-    }
-
-    @RequestMapping(value="/{user_id}",method = RequestMethod.GET)
-    public List<Book> getUsersBooksByUserId(@PathVariable Long user_id){
-        return usersBooksService.getUsersBookByUserId(user_id);
+    @RequestMapping(value= "/{userId}",method = RequestMethod.GET)
+    public List<Book> getUsersBooksByUserId(@PathVariable Long userId){
+        return usersBooksService.getUsersBookByUserId(userId);
     }
 
 }

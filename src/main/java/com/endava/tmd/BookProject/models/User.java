@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -18,8 +16,8 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, updatable = false)
-    private Long user_id;
+    @Column(name="user_id", nullable = false, updatable = false)
+    private Long userId;
 
     @Column(nullable = false)
     private String username;
@@ -37,9 +35,9 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column(columnDefinition = "timestamp default NOW()", insertable = false, updatable = false)
+    @Column(name="created_on", columnDefinition = "timestamp default NOW()", insertable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_on;
+    private Date createdOn;
 
     public String getUsername() {
         return username;
@@ -81,11 +79,11 @@ public class User {
         this.email = email;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public Date getCreated_on() {
-        return created_on;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 }

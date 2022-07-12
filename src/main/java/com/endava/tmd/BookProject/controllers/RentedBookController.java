@@ -14,34 +14,29 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/rented_books")
+@RequestMapping("/rentedBooks")
 public class RentedBookController {
 
     @Autowired
     private RentedBookService rentedBookService;
-
-    @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
-    public ResponseEntity<?> rentBook(@RequestParam(value = "for_rent_book_id") Long for_rent_book_id, @RequestParam(value = "renting_user_id") Long renting_user_id){
-        return rentedBookService.rentBook(for_rent_book_id, renting_user_id);
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<RentedBook> getAllRentedBooks(){
         return rentedBookService.getAllRentedBooks();
     }
 
-    @RequestMapping(value="/bookOwnerUserID", params="book_owner_user_id",method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getRentedBooksByBookUserId(@RequestParam("book_owner_user_id") Long user_id){
-        return rentedBookService.getRentedBooksByBookUserId(user_id);
+    @RequestMapping(value="/bookOwnerUserID", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getRentedBooksByBookUserId(@RequestParam("bookOwnerUserId") Long bookOwnerUserId){
+        return rentedBookService.getRentedBooksByBookUserId(bookOwnerUserId);
     }
 
-    @RequestMapping(value = "/extendBookRentPeriod",params = "rented_book_id", method = RequestMethod.PUT)
-    public void extendBookRentPeriod(@RequestParam("rented_book_id") Long rented_book_id){
-        rentedBookService.extendBookRentPeriod(rented_book_id);
+    @RequestMapping(value = "/extendBookRentPeriod", method = RequestMethod.PUT)
+    public ResponseEntity<?> extendBookRentPeriod(@RequestParam("rentedBookId") Long rentedBookId){
+        return rentedBookService.extendBookRentPeriod(rentedBookId);
     }
 
-    @RequestMapping(value="/borrowerUserID", params="user_id",method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getUsersRentedBooks(@RequestParam("user_id") Long user_id){
-        return rentedBookService.getUsersRentedBooks(user_id);
+    @RequestMapping(value="/borrowerUserID",method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUsersRentedBooks(@RequestParam("userId") Long userId){
+        return rentedBookService.getUsersRentedBooks(userId);
     }
 }

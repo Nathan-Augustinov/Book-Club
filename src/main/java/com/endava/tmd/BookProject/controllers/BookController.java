@@ -22,15 +22,14 @@ public class BookController {
         return bookService.getAllBooks();
     }
     
-    @RequestMapping(value = "/{book_id}",method = RequestMethod.GET)
-
-    public Object getBookById(@PathVariable Long id){
-        return bookService.getBookById(id)!=null ? bookService.getBookById(id) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @RequestMapping(value = "/{bookId}",method = RequestMethod.GET)
+    public Object getBookById(@PathVariable Long bookId){
+        return bookService.getBookById(bookId)!=null ? bookService.getBookById(bookId) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(params = "book_id", method = RequestMethod.DELETE)
-    public void deleteBookById(@RequestParam("book_id") Long id){
-        bookService.deleteBookById(id);
+    @RequestMapping(params = "bookId", method = RequestMethod.DELETE)
+    public void deleteBookById(@RequestParam("bookId") Long bookId){
+        bookService.deleteBookById(bookId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -38,14 +37,19 @@ public class BookController {
         bookService.addBook(book);
     }
 
-    @RequestMapping(params = "book_id", method = RequestMethod.PUT)
-    public void updateBook(@RequestParam("book_id") Long id, @RequestBody Book book){
-        bookService.updateBook(id, book);
+    @RequestMapping(params = "bookId", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateBook(@RequestParam("bookId") Long bookId, @RequestBody Book book){
+        return bookService.updateBook(bookId, book);
     }
 
-    @RequestMapping(value = "/TitleOrAuthor", method = RequestMethod.GET)
+    @RequestMapping(value = "/titleOrAuthor", method = RequestMethod.GET)
     public List<Book> getBooksByTitleOrAuthor(@RequestParam(value = "title") Optional<String> title, @RequestParam(value="author") Optional<String> author){
         return bookService.getBooksByTitleOrAuthor(title,author);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/addBookByUserId")
+    public ResponseEntity<?> createBookWithUserId(@RequestParam(value= "userId") Long userId, @RequestBody Book book){
+        return bookService.createBookWithUserId(userId, book);
     }
 
 }
