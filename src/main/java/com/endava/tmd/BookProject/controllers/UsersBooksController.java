@@ -5,7 +5,6 @@ import com.endava.tmd.BookProject.models.UsersBooks;
 import com.endava.tmd.BookProject.services.UsersBooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -20,7 +19,9 @@ public class UsersBooksController {
         return usersBooksService.getAllUsersBooks();
     }
 
-    @RequestMapping(value= "/{userId}",method = RequestMethod.GET)
+    @RequestMapping(
+            value= "/{userId}",
+            method = RequestMethod.GET)
     public List<Book> getUsersBooksByUserId(@PathVariable Long userId){
         return usersBooksService.getUsersBookByUserId(userId);
     }

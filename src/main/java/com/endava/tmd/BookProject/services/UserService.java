@@ -2,14 +2,12 @@ package com.endava.tmd.BookProject.services;
 
 import com.endava.tmd.BookProject.models.User;
 import com.endava.tmd.BookProject.repositories.UserRepository;
+import com.endava.tmd.BookProject.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.security.SecureRandom;
 import java.util.List;
 
 @Service
@@ -22,39 +20,47 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User getUserById(Long userId){
-        return repository.findById(userId).orElse(null);
+    public Object getUserById(Long userId){
+        User user = repository.findById(userId).orElse(null);
+        if(user == null){
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .body("");
+        }
+        return user;
     }
 
     public void deleteUserById(Long userId){
         repository.deleteById(userId);
     }
 
-    public String encodedPassword(String plainPassword){
-        int strength = 10;
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(strength, new SecureRandom());
-        return encoder.encode(plainPassword);
-    }
-
     public ResponseEntity<?> addUser(User user){
         List<User> usersList = repository.findAll();
         for (User user1 : usersList) {
             if(user1.getUsername().equals(user.getUsername())){
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists!");
+                return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body("Username already exists!");
             }
         }
-        user.setPassword(encodedPassword(user.getPassword()));
+        user.setPassword(Utils.encodedPassword(user.getPassword()));
         repository.saveAndFlush(user);
-        return ResponseEntity.status(HttpStatus.OK).body("User created successfully");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("User created successfully");
     }
 
     public ResponseEntity<?> updateUser(Long userId, User user){
         User existingUser = repository.findById(userId).orElse(null);
         if(existingUser == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User id given not a correct one!");
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("User id given not a correct one!");
         }
         BeanUtils.copyProperties(user, existingUser, "user_id","created_on");
         repository.saveAndFlush(existingUser);
-        return ResponseEntity.status(HttpStatus.OK).body("User updated successfully!");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("User updated successfully!");
     }
 }

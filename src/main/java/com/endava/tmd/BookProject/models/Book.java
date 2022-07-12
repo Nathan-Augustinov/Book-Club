@@ -17,19 +17,25 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id", nullable = false, updatable = false)
+    @Column(name = "book_id",
+            nullable = false,
+            updatable = false)
     private Long bookId;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title",
+            nullable = false)
     private String title;
 
-    @Column(name= "author", nullable = false)
+    @Column(name= "author",
+            nullable = false)
     private String author;
 
-    @Column(name= "description", nullable = false)
+    @Column(name= "description",
+            nullable = false)
     private String description;
 
-    @Column(name="published_date", nullable = false)
+    @Column(name="published_date",
+            nullable = false)
     private LocalDate publishedDate;
 
     public Long getBookId() {

@@ -3,12 +3,11 @@ package com.endava.tmd.BookProject.controllers;
 import com.endava.tmd.BookProject.models.Book;
 import com.endava.tmd.BookProject.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("books")
@@ -22,12 +21,14 @@ public class BookController {
         return bookService.getAllBooks();
     }
     
-    @RequestMapping(value = "/{bookId}",method = RequestMethod.GET)
+    @RequestMapping(
+            value = "/{bookId}",
+            method = RequestMethod.GET)
     public Object getBookById(@PathVariable Long bookId){
-        return bookService.getBookById(bookId)!=null ? bookService.getBookById(bookId) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return bookService.getBookById(bookId);
     }
 
-    @RequestMapping(params = "bookId", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public void deleteBookById(@RequestParam("bookId") Long bookId){
         bookService.deleteBookById(bookId);
     }
@@ -37,17 +38,21 @@ public class BookController {
         bookService.addBook(book);
     }
 
-    @RequestMapping(params = "bookId", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateBook(@RequestParam("bookId") Long bookId, @RequestBody Book book){
         return bookService.updateBook(bookId, book);
     }
 
-    @RequestMapping(value = "/titleOrAuthor", method = RequestMethod.GET)
+    @RequestMapping(
+            value = "/titleOrAuthor",
+            method = RequestMethod.GET)
     public List<Book> getBooksByTitleOrAuthor(@RequestParam(value = "title") Optional<String> title, @RequestParam(value="author") Optional<String> author){
         return bookService.getBooksByTitleOrAuthor(title,author);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/addBookByUserId")
+    @RequestMapping(
+            value = "/addBookByUserId",
+            method = RequestMethod.POST)
     public ResponseEntity<?> createBookWithUserId(@RequestParam(value= "userId") Long userId, @RequestBody Book book){
         return bookService.createBookWithUserId(userId, book);
     }

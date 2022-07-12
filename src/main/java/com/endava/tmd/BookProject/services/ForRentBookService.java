@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -54,7 +53,9 @@ public class ForRentBookService {
             }
             responseList.add(jsonObject);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(responseList.toString());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseList.toString());
     }
 
     public static Period transformRentPeriodInTime(RentPeriod rentPeriod){
@@ -85,27 +86,39 @@ public class ForRentBookService {
         ForRentBook forRentBook = forRentBookRepository.findById(forRentBookId).orElse(null);
         User rentingUser = userRepository.findById(rentingUserId).orElse(null);
         if(forRentBook == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("For rent book id given not a correct one!");
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("For rent book id given not a correct one!");
         }
         if(rentingUser == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User id given not a correct one!");
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("User id given not a correct one!");
         }
         Long bookOwnerUserId = forRentBook.getUsersBooks().getUser().getUserId();
         if(rentingUserId.equals(bookOwnerUserId)){
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("User cannot borrow his own book!");
+                return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body("User cannot borrow his own book!");
             }
         Boolean rentingAvailable = forRentBook.getAvailableForRenting();
         if(!rentingAvailable){
             Long existingRentUserId = rentedBookRepository.getRentedBookByForRentBook(forRentBook).getRentUser().getUserId();
             if(existingRentUserId.equals(rentingUserId)){
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("User already has the book borrowed!");
+                return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body("User already has the book borrowed!");
             }
             addIntoTheWaitingList(forRentBook, rentingUser);
-            return ResponseEntity.status(HttpStatus.OK).body("User is on the waiting list for borrowing the book.");
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("User is on the waiting list for borrowing the book.");
         }
         else{
             addIntoTheRentedBooks(forRentBook, rentingUser);
-            return ResponseEntity.status(HttpStatus.OK).body("User successfully rented the book.");
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("User successfully rented the book.");
         }
     }
 }

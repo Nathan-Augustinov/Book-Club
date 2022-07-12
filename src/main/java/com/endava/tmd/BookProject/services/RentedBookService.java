@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -75,20 +74,26 @@ public class RentedBookService {
             jsonObject.put("BorrowerName",rentedBook.getRentUser().getFirstname()+" "+rentedBook.getRentUser().getLastname());
             responseList.add(jsonObject);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(responseList.toString());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseList.toString());
     }
 
     public ResponseEntity<?> extendBookRentPeriod(Long rentedBookId){
         ExtendRentPeriod extendRentPeriod = ExtendRentPeriod.ONE_WEEK;
         RentedBook rentedBook = rentedBookRepository.findById(rentedBookId).orElse(null);
         if(rentedBook == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Rented book id given is not a correct one!");
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Rented book id given is not a correct one!");
         }
         Long forRentBookId = rentedBook.getForRentBook().getForRentBookId();
         forRentBookRepository.updateExtendedRentPeriod(forRentBookId, extendRentPeriod);
         LocalDate newReturnDate = rentedBook.getReturnDate().plus(RentedBookService.transformExtendRentPeriodInTime(extendRentPeriod));
         rentedBookRepository.extendReturnDate(rentedBookId, newReturnDate);
-        return ResponseEntity.status(HttpStatus.OK).body("Rented book's return date extended with" + " " + extendRentPeriod.toString().replace("_"," ").toLowerCase() + "!");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Rented book's return date extended with" + " " + extendRentPeriod.toString().replace("_"," ").toLowerCase() + "!");
     }
 
     public ResponseEntity<?> getUsersRentedBooks(Long userId){
@@ -101,7 +106,9 @@ public class RentedBookService {
             jsonObject.put("ReturnDate",usersRentedBook.getReturnDate());
             responseList.add(jsonObject);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(responseList.toString());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseList.toString());
     }
 
 }

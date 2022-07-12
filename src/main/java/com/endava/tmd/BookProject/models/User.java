@@ -16,7 +16,9 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id", nullable = false, updatable = false)
+    @Column(name="user_id",
+            nullable = false,
+            updatable = false)
     private Long userId;
 
     @Column(nullable = false)
@@ -35,7 +37,10 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column(name="created_on", columnDefinition = "timestamp default NOW()", insertable = false, updatable = false)
+    @Column(name="created_on",
+            columnDefinition = "timestamp default NOW()",
+            insertable = false,
+            updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
 

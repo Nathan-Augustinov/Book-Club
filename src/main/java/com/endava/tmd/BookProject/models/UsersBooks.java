@@ -15,7 +15,9 @@ public class UsersBooks {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="users_books_id", nullable = false, updatable = false)
+    @Column(name="users_books_id",
+            nullable = false,
+            updatable = false)
     private Long usersBooksId;
 
     @ManyToOne

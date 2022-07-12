@@ -16,7 +16,9 @@ public class RentedBook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="rented_book_id", nullable = false, updatable = false)
+    @Column(name="rented_book_id",
+            nullable = false,
+            updatable = false)
     private Long rentedBookId;
 
     @ManyToOne

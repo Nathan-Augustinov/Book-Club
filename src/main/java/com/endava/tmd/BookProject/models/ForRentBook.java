@@ -14,7 +14,9 @@ import javax.persistence.*;
 public class ForRentBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="for_rent_book_id", nullable = false, updatable = false)
+    @Column(name="for_rent_book_id",
+            nullable = false,
+            updatable = false)
     private Long forRentBookId;
 
     @OneToOne
@@ -27,7 +29,8 @@ public class ForRentBook {
     @Column(name="extend_rent_period")
     private ExtendRentPeriod extendRentPeriod;
 
-    @Column(name="available_for_renting", columnDefinition = "boolean default true")
+    @Column(name="available_for_renting",
+            columnDefinition = "boolean default true")
     private Boolean availableForRenting;
 
     public Long getForRentBookId() {
