@@ -111,5 +111,9 @@ public class BookService {
         return  false;
     }
 
+    public List<Book> getBooksByUserId(Long userId){
+        return bookRepository.getBooksByUserId(userId);
+    }
+
 
 }

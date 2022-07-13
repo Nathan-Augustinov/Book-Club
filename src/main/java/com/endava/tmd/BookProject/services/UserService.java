@@ -57,7 +57,7 @@ public class UserService {
                     .status(HttpStatus.BAD_REQUEST)
                     .body("User id given not a correct one!");
         }
-        BeanUtils.copyProperties(user, existingUser, "user_id","created_on");
+        BeanUtils.copyProperties(user, existingUser, "userId","createdOn");
         repository.saveAndFlush(existingUser);
         return ResponseEntity
                 .status(HttpStatus.OK)
