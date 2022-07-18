@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @Api(tags = {SwaggerConfig.USER_TAG})
-@RequestMapping("users")
+@RequestMapping("api/users")
 public class UserController {
 
     @Autowired
@@ -47,7 +47,7 @@ public class UserController {
     @ApiOperation(
             value = "Create a new user",
             notes = "Creates a new user account")
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResponseEntity<?> addUser(@RequestBody User user){
         return userService.addUser(user);
     }

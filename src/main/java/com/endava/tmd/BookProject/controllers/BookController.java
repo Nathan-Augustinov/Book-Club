@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @Api(tags = {SwaggerConfig.BOOK_TAG})
-@RequestMapping("books")
+@RequestMapping("api/books")
 public class BookController {
 
     @Autowired

@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @Api(tags = {SwaggerConfig.WAITING_LIST_TAG})
-@RequestMapping("/waitingList")
+@RequestMapping("api/waitingList")
 public class WaitingListController {
 
     @Autowired

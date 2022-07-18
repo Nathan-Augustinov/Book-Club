@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @Api(tags = {SwaggerConfig.USER_BOOK_TAG})
-@RequestMapping("usersBooks")
+@RequestMapping("api/usersBooks")
 public class UsersBooksController {
 
     @Autowired

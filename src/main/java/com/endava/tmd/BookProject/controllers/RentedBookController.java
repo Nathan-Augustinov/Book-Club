@@ -16,7 +16,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @Api(tags = {SwaggerConfig.RENT_TAG})
-@RequestMapping("/rentedBooks")
+@RequestMapping("api/rentedBooks")
 public class RentedBookController {
 
     @Autowired
