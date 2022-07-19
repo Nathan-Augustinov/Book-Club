@@ -1,7 +1,10 @@
 package com.endava.tmd.BookProject.jwt;
 
+import com.endava.tmd.BookProject.models.User;
+import com.endava.tmd.BookProject.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
+import org.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,9 +26,13 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
     private final JwtConfig jwtConfig;
 
-    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
+    private UserRepository userRepository;
+
+    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
+        this.userRepository = userRepository;
+        setFilterProcessesUrl("/api/users/login");
     }
 
     @Override
@@ -59,5 +66,19 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .compact();
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+        User user = userRepository.findUserByUsername(authResult.getName());
+        if(user == null){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        else{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Username", user.getUsername());
+            jsonObject.put("UserFirstname", user.getFirstname());
+            jsonObject.put("UserLastname", user.getLastname());
+            jsonObject.put("UserEmail", user.getEmail());
+            jsonObject.put("JWT Token", jwtConfig.getTokenPrefix() + token);
+            response.getWriter().write(jsonObject.toString());
+        }
+
     }
 }

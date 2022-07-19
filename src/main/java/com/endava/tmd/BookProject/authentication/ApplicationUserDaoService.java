@@ -1,7 +1,7 @@
 package com.endava.tmd.BookProject.authentication;
 
 import com.endava.tmd.BookProject.models.User;
-import com.endava.tmd.BookProject.services.UserService;
+import com.endava.tmd.BookProject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.Set;
 public class ApplicationUserDaoService implements ApplicationUserDao {
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
     @Override
     public Optional<ApplicationUser> selectApplicationUserByUsername(String username) {
         return getApplicationUsers()
@@ -25,7 +25,7 @@ public class ApplicationUserDaoService implements ApplicationUserDao {
 
     private List<ApplicationUser> getApplicationUsers(){
         List<ApplicationUser> applicationUserList = new ArrayList<>();
-        List<User> userList = userService.getAllUsers();
+        List<User> userList = userRepository.findAll();
         for (User user : userList) {
             ApplicationUser applicationUser = new ApplicationUser(
                     user.getUsername(),

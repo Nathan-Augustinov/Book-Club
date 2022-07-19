@@ -1,5 +1,7 @@
 package com.endava.tmd.BookProject.services;
 
+import com.endava.tmd.BookProject.authentication.ApplicationUserService;
+import com.endava.tmd.BookProject.jwt.JwtConfig;
 import com.endava.tmd.BookProject.models.User;
 import com.endava.tmd.BookProject.repositories.UserRepository;
 import com.endava.tmd.BookProject.utils.Utils;
@@ -7,21 +9,32 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private ApplicationUserService applicationUserService;
+
+    @Autowired
+    private JwtConfig jwtConfig;
 
     public List<User> getAllUsers(){
-        return repository.findAll();
+        return userRepository.findAll();
     }
 
     public Object getUserById(Long userId){
-        User user = repository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
         if(user == null){
             return ResponseEntity
                     .status(HttpStatus.NO_CONTENT)
@@ -31,11 +44,11 @@ public class UserService {
     }
 
     public void deleteUserById(Long userId){
-        repository.deleteById(userId);
+        userRepository.deleteById(userId);
     }
 
     public ResponseEntity<?> addUser(User user){
-        List<User> usersList = repository.findAll();
+        List<User> usersList = userRepository.findAll();
         for (User user1 : usersList) {
             if(user1.getUsername().equals(user.getUsername())){
                 return ResponseEntity
@@ -44,23 +57,25 @@ public class UserService {
             }
         }
         user.setPassword(Utils.encodedPassword(user.getPassword()));
-        repository.saveAndFlush(user);
+        userRepository.saveAndFlush(user);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("User created successfully");
     }
 
     public ResponseEntity<?> updateUser(Long userId, User user){
-        User existingUser = repository.findById(userId).orElse(null);
+        User existingUser = userRepository.findById(userId).orElse(null);
         if(existingUser == null){
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body("User id given not a correct one!");
         }
         BeanUtils.copyProperties(user, existingUser, "userId","createdOn");
-        repository.saveAndFlush(existingUser);
+        userRepository.saveAndFlush(existingUser);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("User updated successfully!");
     }
+
+
 }
