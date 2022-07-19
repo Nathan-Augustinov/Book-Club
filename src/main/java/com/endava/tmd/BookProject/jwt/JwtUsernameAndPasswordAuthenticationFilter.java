@@ -67,6 +67,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
         User user = userRepository.findUserByUsername(authResult.getName());
+        user.setToken(token);
+        userRepository.saveAndFlush(user);
         if(user == null){
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -76,7 +78,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             jsonObject.put("UserFirstname", user.getFirstname());
             jsonObject.put("UserLastname", user.getLastname());
             jsonObject.put("UserEmail", user.getEmail());
-            jsonObject.put("JWT Token", jwtConfig.getTokenPrefix() + token);
+            jsonObject.put("JWT Token", user.getToken());
             response.getWriter().write(jsonObject.toString());
         }
 

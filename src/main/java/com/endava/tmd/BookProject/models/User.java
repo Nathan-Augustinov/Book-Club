@@ -44,6 +44,9 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
 
+    @Column(name="token")
+    private String token;
+
     public String getUsername() {
         return username;
     }
@@ -90,5 +93,13 @@ public class User {
 
     public Date getCreatedOn() {
         return createdOn;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
