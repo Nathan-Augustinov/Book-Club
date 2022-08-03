@@ -78,7 +78,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             jsonObject.put("UserFirstname", user.getFirstname());
             jsonObject.put("UserLastname", user.getLastname());
             jsonObject.put("UserEmail", user.getEmail());
-            jsonObject.put("JWT Token", user.getToken());
+            jsonObject.put("JWTToken", user.getToken());
             response.getWriter().write(jsonObject.toString());
         }
 
