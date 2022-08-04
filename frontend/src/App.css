@@ -40,8 +40,8 @@
 .startPageHeader {
   width: 100%;
   height: 75px;
-  background: #88D498;
-  align-items: center;
+  background: #46522A;
+  text-align: center
 }
 
 .logoImage {
@@ -50,22 +50,37 @@
 }
 
 .signUpMessage{
-  color: #114B5F;
+  color: #46522A;
   font-weight: bold;
 }
 
-.form{
+.LoginMessage{
+  color: #46522A;
+  font-weight: bold;
+}
+
+.register_form{
   background-color: white;
   margin-left: 170px;
   width:50%;
   float:left;
   padding: 20px; 
+  text-align: center
 }
+
+.login_form{
+  background-color: white;
+  margin-top: 200px;
+  align-items: center;
+  padding: 20px; 
+  text-align: center
+}
+
 
 .form_label{
   display: block;
   font-size: larger;
-  color: #88D498;
+  color: #46522A;
   padding: 4px;
 }
  
@@ -76,8 +91,8 @@
 }
 
 .btn{
-  color: #114B5F;
-  background-color: #88D498;
+  color: #D1E7E0;
+  background-color: #46522A;
   border-radius: 5px;
   font-size: larger;
   display: block;

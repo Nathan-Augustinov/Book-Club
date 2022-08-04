@@ -1,7 +1,13 @@
 import React from "react"
 import logoImage from "../resources/logo.png"
 import bookshelfImage from "../resources/bookshelf.jpg"
+import { useNavigate } from "react-router-dom";
 const StartPage = () => {
+    let navigate = useNavigate();
+    const routeChange = () => {
+        let path = 'login';
+        navigate(path);
+    }
     return (
         <div>
             <div className="startPageHeader">
@@ -10,7 +16,7 @@ const StartPage = () => {
             <div>
                 <div className="div_container">
                     <div className="flex_child">
-                        <div className="form">
+                        <div className="register_form">
                             <p className="signUpMessage">Sign up to TMD Book Club</p>
                             <div className="form_body">
                                 <div className="firstname">
@@ -39,11 +45,11 @@ const StartPage = () => {
                                 </div>
                             </div>
                             <div class="footer">
-                                <button type="submit" class="btn">Sign Up</button>
+                                <button type="submit" class="btn" onClick={routeChange}>Sign Up</button>
                             </div>
                             <div>
                                 <p>Already have an account?</p>
-                                <button type="submit" class="btn">Login</button>
+                                <button type="submit" class="btn" onClick={routeChange}>Login</button>
                             </div>
                         </div> 
                     </div>   
