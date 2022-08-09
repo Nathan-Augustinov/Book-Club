@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,13 +35,23 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 .startPageHeader {
   width: 100%;
   height: 75px;
   background: #46522A;
-  text-align: center
+  text-align: center;
+}
+
+.dashboardHeader{
+  width: 100%;
+  height: 75px;
+  background: #46522A;
+}
+
+.dashboardHeader > img {
+  margin-left: 30%;
 }
 
 .logoImage {
@@ -73,7 +83,7 @@
   margin-top: 200px;
   align-items: center;
   padding: 20px; 
-  text-align: center
+  text-align: center;
 }
 
 
@@ -100,6 +110,17 @@
   margin: 5px auto;
 }
 
+.logout_btn{
+  height: 45px;
+  color: #46522A;
+  background-color: #D1E7E0;
+  border-radius: 5px;
+  font-size: larger;
+  float: right;
+  margin-top: 15px;
+  margin-right: 10px;
+}
+
 .bookshelfImage {
   margin-top: 4px;
   width:100%;
@@ -108,11 +129,60 @@
 
 .div_container{
   display: flex;
-  height: 670px;
 }
 
 .flex_child{
   flex: 1;
+}
+
+.image_div{
+  height: 89vh;
+}
+
+.searchDiv{
+  float: left;
+}
+
+.searchDiv > label {
+  color: #46522A;
+}
+.searchBar{
+  height: 45px;
+  margin-top: 15px;
+  margin-left: 10px;
+  border-radius: 5px;
+  color: #46522A;
+  background-color: #D1E7E0;
+}
+
+.bookslist {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.book {
+  border: 3px solid #D1E7E0;
+  border-radius: 5px;
+  padding: 5px 0;
+  margin: 15px 7px 0 7px ;
+}
+
+.book_image{
+  margin-left: 5px;
+}
+
+.book_details {
+  padding: 0 5px;
+}
+
+.book_title{
+  color: #46522A;
+  margin-top: 40px;
+}
+
+.book_author{
+  color: #46522A;
+  margin-top: 35px;
 }
 
 

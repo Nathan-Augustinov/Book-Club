@@ -20,40 +20,40 @@ const StartPage = () => {
                             <p className="signUpMessage">Sign up to TMD Book Club</p>
                             <div className="form_body">
                                 <div className="firstname">
-                                    <label className="form_label" for="firstName">First Name </label>
+                                    <label className="form_label">First Name </label>
                                     <input className="form_input" type="text" id="firstName" />
                                 </div>
                                 <div className="lastname">
-                                    <label className="form_label" for="lastName">Last Name </label>
+                                    <label className="form_label">Last Name </label>
                                     <input  type="text" name="" id="lastName"  className="form_input" />
                                 </div>
                                 <div className="email">
-                                    <label className="form_label" for="email">Email </label>
+                                    <label className="form_label">Email </label>
                                     <input  type="email" id="email" className="form_input"/>
                                 </div>
                                 <div className="username">
-                                    <label className="form_label" for="username">Username </label>
+                                    <label className="form_label">Username </label>
                                     <input  type="text" id="username" className="form_input"/>
                                 </div>
                                 <div className="password">
-                                    <label className="form_label" for="password">Password </label>
+                                    <label className="form_label">Password </label>
                                     <input className="form_input" type="password"  id="password"/>
                                 </div>
                                 <div className="confirm-password">
-                                    <label className="form_label" for="confirmPassword">Confirm Password </label>
+                                    <label className="form_label">Confirm Password </label>
                                     <input className="form_input" type="password" id="confirmPassword"/>
                                 </div>
                             </div>
-                            <div class="footer">
-                                <button type="submit" class="btn" onClick={routeChange}>Sign Up</button>
+                            <div className="footer">
+                                <button type="submit" className="btn" onClick={routeChange}>Sign Up</button>
                             </div>
                             <div>
                                 <p>Already have an account?</p>
-                                <button type="submit" class="btn" onClick={routeChange}>Login</button>
+                                <button type="submit" className="btn" onClick={routeChange}>Login</button>
                             </div>
                         </div> 
                     </div>   
-                    <div className="flex_child">
+                    <div className="image_div flex_child">
                         <img className="bookshelfImage" src={bookshelfImage} alt=''/>
                     </div>
                 </div>
