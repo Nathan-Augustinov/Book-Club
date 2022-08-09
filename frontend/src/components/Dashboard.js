@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Product from "./Product";
+import Book from "./Book";
 
 const Dashboard = () => {
     const [value, setValue] = React.useState(0);
@@ -56,34 +56,34 @@ const Dashboard = () => {
             <div className="container bookslist">
                 <div className="div_container">
                     <div className="flex_child">
-                        <Product />
+                        <Book />
                     </div>
                     <div className="flex_child">
-                        <Product />
-                    </div>
-                </div>
-                <div className="div_container">
-                    <div className="flex_child">
-                        <Product />
-                    </div>
-                    <div className="flex_child">
-                        <Product />
+                        <Book />
                     </div>
                 </div>
                 <div className="div_container">
                     <div className="flex_child">
-                        <Product />
+                        <Book />
                     </div>
                     <div className="flex_child">
-                        <Product />
+                        <Book/>
                     </div>
                 </div>
                 <div className="div_container">
                     <div className="flex_child">
-                        <Product />
+                        <Book />
                     </div>
                     <div className="flex_child">
-                        <Product />
+                        <Book />
+                    </div>
+                </div>
+                <div className="div_container">
+                    <div className="flex_child">
+                        <Book />
+                    </div>
+                    <div className="flex_child">
+                        <Book />
                     </div>
                 </div>
             </div>

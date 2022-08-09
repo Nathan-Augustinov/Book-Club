@@ -185,6 +185,19 @@
   margin-top: 35px;
 }
 
+.book_description{
+  color: #46522A;
+  margin-top: 35px;
+}
+
+.book_published_date{
+  color: #46522A;
+  margin-top: 35px;
+}
+
+.bookpage_image > img{
+  height: 85vh;
+}
 
 
 
