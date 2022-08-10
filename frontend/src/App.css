@@ -199,6 +199,20 @@
   height: 85vh;
 }
 
+.tab-list-item {
+  display: inline-block;
+  list-style: none;
+  color: #46522A;
+  margin-bottom: -1px;
+  margin-left: 25vh;
+  padding: 0.5rem 0.75rem;
+}
 
+.tab-list-active {
+  background-color: white;
+  color: #713e3a;
+  border: solid #D1E7E0;
+  border-width: 0 0px 2px 0px;
+}
 
 

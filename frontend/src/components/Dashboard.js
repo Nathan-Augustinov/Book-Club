@@ -2,17 +2,21 @@ import React from "react"
 import logoImage from "../resources/logo.png"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Book from "./Book";
+// import Box from '@mui/material/Box';
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
+import AllBooksPage from "./AllBooksPage";
+import Tabs from "./Tabs";
+import YourBooksPage from "./YourBooksPage";
+import AvailableBooksPage from "./AvailableBooksPage";
+import RentedBooksPage from "./RentedBooksPage";
 
 const Dashboard = () => {
-    const [value, setValue] = React.useState(0);
+    // const [value, setValue] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    // const handleChange = (event, newValue) => {
+    //     setValue(newValue);
+    // };
 
     return (
         <div>
@@ -35,58 +39,21 @@ const Dashboard = () => {
                 <button type="submit" className="logout_btn">Logout</button>
             </div>
             <div>
-                <Box >
-                    <Tabs 
-                        TabIndicatorProps={{style: {background:'#D1E7E0'}}}
-                        value={value} 
-                        onChange={handleChange} 
-                        variant="fullWidth"
-                        indicatorColor="#D1E7E0"
-                        textColor="#46522A"
-                        centered
-                    >
-                        <Tab label="All Books" />
-                        <Tab label="Your Books" />
-                        <Tab label="Available Books" />
-                        <Tab label="Rented books" />
-                        <Tab label="Waiting list" />
-                    </Tabs>
-                </Box> 
+                <Tabs>
+                    <div label="All Books">
+                        <AllBooksPage />
+                    </div>
+                    <div label="Your Books">
+                        <YourBooksPage />
+                    </div>
+                    <div label="Available Books">
+                        <AvailableBooksPage />
+                    </div>
+                    <div label="Rented Books">
+                        <RentedBooksPage />
+                    </div>
+                </Tabs>
             </div>  
-            <div className="container bookslist">
-                <div className="div_container">
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                </div>
-                <div className="div_container">
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                    <div className="flex_child">
-                        <Book/>
-                    </div>
-                </div>
-                <div className="div_container">
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                </div>
-                <div className="div_container">
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }
