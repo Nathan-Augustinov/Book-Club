@@ -2,21 +2,19 @@ import React from "react"
 import logoImage from "../resources/logo.png"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
-// import Box from '@mui/material/Box';
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
 import AllBooksPage from "./AllBooksPage";
 import Tabs from "./Tabs";
 import YourBooksPage from "./YourBooksPage";
 import AvailableBooksPage from "./AvailableBooksPage";
 import RentedBooksPage from "./RentedBooksPage";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-    // const [value, setValue] = React.useState(0);
-
-    // const handleChange = (event, newValue) => {
-    //     setValue(newValue);
-    // };
+    let navigate = useNavigate();
+    const routeChange = () => {
+        let path = '/';
+        navigate(path);
+    }
 
     return (
         <div>
@@ -36,7 +34,7 @@ const Dashboard = () => {
                         )
                     }}
                 />
-                <button type="submit" className="logout_btn">Logout</button>
+                <button type="submit" className="logout_btn" onClick={routeChange}>Logout</button>
             </div>
             <div>
                 <Tabs>
