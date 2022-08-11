@@ -16,6 +16,7 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @Api(tags = {SwaggerConfig.BOOK_TAG})
 @RequestMapping("api/books")
 public class BookController {

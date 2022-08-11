@@ -6,12 +6,14 @@ import com.endava.tmd.BookProject.services.WaitingListService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @Api(tags = {SwaggerConfig.WAITING_LIST_TAG})
 @RequestMapping("api/waitingList")
 public class WaitingListController {

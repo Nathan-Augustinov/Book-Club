@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @Api(tags = {SwaggerConfig.USER_TAG})
 @RequestMapping("api/users")
 public class UserController {
