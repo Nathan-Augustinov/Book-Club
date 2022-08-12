@@ -23,7 +23,7 @@ const StartPage = () => {
             return;
         }
         try{ 
-            await axios.post("http://localhost:8080/api/users/register",
+            await axios.post("/api/users/register",
             {
                 firstname: firstname,
                 lastname: lastname,
@@ -40,7 +40,7 @@ const StartPage = () => {
             setUsername("");
             setPassword("");
             setConfirmPassword("");
-            
+
             routeChange();
         }
         catch{

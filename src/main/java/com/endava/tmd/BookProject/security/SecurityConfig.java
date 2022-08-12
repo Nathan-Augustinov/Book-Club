@@ -3,7 +3,6 @@ package com.endava.tmd.BookProject.security;
 import com.endava.tmd.BookProject.authentication.ApplicationUserService;
 import com.endava.tmd.BookProject.jwt.JwtConfig;
 import com.endava.tmd.BookProject.jwt.JwtTokenVerifier;
-import com.endava.tmd.BookProject.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import com.endava.tmd.BookProject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
@@ -40,11 +40,14 @@ public class SecurityConfig {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(this.authenticationManager(), jwtConfig, userRepository))
-                .addFilterAfter(new JwtTokenVerifier(jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
+                //.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(this.authenticationManager(), jwtConfig, userRepository))
+                //.addFilterAfter(new JwtTokenVerifier(jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenVerifier(jwtConfig), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers( "/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/users/register", "/api/users/login").permitAll()
+                .antMatchers("/api/users/register", "/api/users/login","/login").permitAll()
+                .antMatchers("/swagger-ui/**","/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated();
 

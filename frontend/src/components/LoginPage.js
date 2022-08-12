@@ -1,4 +1,6 @@
 import React from "react"
+import axios from "axios";
+import { useState } from "react";
 import logoImage from "../resources/logo.png"
 import bookshelfImage_part1 from "../resources/bookshelf_part1.png"
 import bookshelfImage_part2 from "../resources/bookshelf_part2.png"
@@ -9,6 +11,29 @@ const LoginPage = () => {
     const routeChange = () => {
         let path = '../dashboard';
         navigate(path);
+    }
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    async function handleSubmit(){
+        try{ 
+            await axios.post("/api/users/login",
+            {
+                username: username,
+                password: password
+            });
+
+            alert("User logged in successfully");
+
+            setUsername("");
+            setPassword("");
+           
+            routeChange();
+        }
+        catch{
+            alert("User log in failed");
+        }
     }
 
     return (
@@ -26,15 +51,15 @@ const LoginPage = () => {
                         <div className="form_body">
                             <div className="username">
                                 <label className="form_label">Username </label>
-                                <input  type="text" id="username" className="form_input"/>
+                                <input  type="text" id="username" className="form_input" onChange={(event) => {setUsername(event.target.value)}}/>
                             </div>
                             <div className="password">
                                 <label className="form_label">Password </label>
-                                <input className="form_input" type="password"  id="password"/>
+                                <input className="form_input" type="password"  id="password" onChange={(event) => {setPassword(event.target.value)}}/>
                             </div>
                         </div>
                         <div className="footer">
-                            <button type="submit" className="btn" onClick={routeChange}>Login</button>
+                            <button type="submit" className="btn" onClick={handleSubmit}>Login</button>
                         </div>
                     </div> 
                 </div>

@@ -1,6 +1,7 @@
 package com.endava.tmd.BookProject.controllers;
 
 import com.endava.tmd.BookProject.config.SwaggerConfig;
+import com.endava.tmd.BookProject.jwt.UsernameAndPasswordAuthenticationRequest;
 import com.endava.tmd.BookProject.models.User;
 import com.endava.tmd.BookProject.services.UserService;
 import io.swagger.annotations.Api;
@@ -51,6 +52,14 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResponseEntity<?> addUser(@RequestBody User user){
         return userService.addUser(user);
+    }
+
+    @ApiOperation(
+            value = "Log in a user",
+            notes = "Log in a user into his account")
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
+    public ResponseEntity<?> loginUser(@RequestBody UsernameAndPasswordAuthenticationRequest authenticationRequest){
+        return userService.loginUser(authenticationRequest);
     }
 
     @ApiOperation(
