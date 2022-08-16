@@ -1,8 +1,9 @@
 import React from "react";
-import Book from "./Book";
+import Book from "../book/Book";
+import "./YourBooksPage.css";
 const YourBooksPage = () => {
     return (
-        <div className="container bookslist">
+        <div className="bookslist">
             <button type="submit" className="btn">Add new book</button>
             <div className="div_container">
                 <div className="flex_child">

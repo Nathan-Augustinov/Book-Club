@@ -1,9 +1,9 @@
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import StartPage from '../src/components/StartPage';
-import LoginPage from '../src/components/LoginPage'; 
-import Dashboard from './components/Dashboard';
-import BookPage from './components/BookPage';
+import StartPage from './components/start-page/StartPage';
+import LoginPage from './components/login-page/LoginPage'; 
+import Dashboard from './components/dashboard/Dashboard';
+import BookPage from './components/book-page/BookPage';
 
 function App() {
   return (

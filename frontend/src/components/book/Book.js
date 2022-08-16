@@ -1,6 +1,7 @@
 import React from 'react';
-import bookshelfImage from "../resources/bookshelf.jpg"
+import bookshelfImage from "../../resources/bookshelf.jpg"
 import { useNavigate } from "react-router-dom";
+import "./Book.css";
 
 const Book = () => {
     let navigate = useNavigate();
@@ -10,7 +11,7 @@ const Book = () => {
     }
 
     return (
-      <div className="row book div_container" onClick={routeChange}>
+      <div className="book div_container" onClick={routeChange}>
         <div className="col-md-2 book_image flex_child">
           <img src={bookshelfImage} alt="" height="150" />
         </div>

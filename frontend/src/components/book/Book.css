@@ -1,0 +1,32 @@
+.book {
+    border: 3px solid #D1E7E0;
+    border-radius: 5px;
+    padding: 5px 0;
+    margin: 15px 7px 0 7px ;
+}
+
+.div_container{
+    display: flex;
+}
+
+.book_image{
+    margin-left: 5px;
+}
+
+.flex_child{
+    flex: 1;
+}
+
+.book_details {
+    padding: 0 5px;
+}
+
+.book_title{
+    color: #46522A;
+    margin-top: 40px;
+}
+
+.book_author{
+    color: #46522A;
+    margin-top: 35px;
+}

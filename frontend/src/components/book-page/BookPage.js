@@ -1,8 +1,9 @@
 import React from 'react';
-import logoImage from "../resources/logo.png"
-import bookshelfImage from "../resources/bookshelf.jpg"
+import logoImage from "../../resources/logo.png"
+import bookshelfImage from "../../resources/bookshelf.jpg"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
+import "./BookPage.css";
 
 const BookPage = () => {
     return (
@@ -25,7 +26,7 @@ const BookPage = () => {
                 />
                 <button type="submit" className="logout_btn">Logout</button>
             </div>
-            <div className="row book div_container">
+            <div className="book div_container">
                 <div className="col-md-4 bookpage_image flex_child ">
                     <img src={bookshelfImage} alt=""/>
                 </div>
@@ -46,12 +47,13 @@ const BookPage = () => {
                         <div className='flex_child'>
                             <button type="submit" className="btn">Rent</button>
                         </div>
-                        <div className='flex_child'>
+                        {/* <div className='flex_child'>
                             <button type="submit" className="btn">Extend rent period</button>
-                        </div>
-                    </div>
-                </div>
+                        </div> */}
+                    </div>       
+                </div> 
             </div>
+            
         </div>
         
     );

@@ -1,9 +1,10 @@
 import React from "react"
 import { useState } from "react";
-import logoImage from "../resources/logo.png"
-import bookshelfImage_part1 from "../resources/bookshelf_part1.png"
-import bookshelfImage_part2 from "../resources/bookshelf_part2.png"
+import logoImage from "../../resources/logo.png"
+import bookshelfImage_part1 from "../../resources/bookshelf_part1.png"
+import bookshelfImage_part2 from "../../resources/bookshelf_part2.png"
 import { useNavigate } from "react-router-dom";
+import "./LoginPage.css";
 
 const LoginPage = () => {
     let navigate = useNavigate();

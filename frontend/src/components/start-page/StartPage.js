@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import logoImage from "../resources/logo.png"
-import bookshelfImage from "../resources/bookshelf.jpg"
+import logoImage from "../../resources/logo.png"
+import bookshelfImage from "../../resources/bookshelf.jpg"
 import { useNavigate } from "react-router-dom";
+import "./StartPage.css"
+
 const StartPage = () => {
     let navigate = useNavigate();
     const routeChange = () => {
@@ -98,7 +100,7 @@ const StartPage = () => {
                                     <label className="form_label">Password </label>
                                     <input className="form_input" type="password"  id="password" onChange={(event) => {setPassword(event.target.value)}}/>
                                 </div>
-                                <div className="confirm-password">
+                                <div className="confirm_password">
                                     <label className="form_label">Confirm Password </label>
                                     <input className="form_input" type="password" id="confirmPassword" onChange={(event) => {setConfirmPassword(event.target.value)}}/>
                                 </div>

@@ -1,8 +1,9 @@
 import React from "react";
-import Book from "./Book";
+import Book from "../book/Book";
+import "./AvailableBooksPage.css";
 const AvailableBooksPage = () => {
     return (
-        <div className="container bookslist">
+        <div className="bookslist">
                 <div className="div_container">
                     <div className="flex_child">
                         <Book />

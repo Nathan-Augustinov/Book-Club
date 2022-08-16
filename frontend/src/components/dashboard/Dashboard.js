@@ -1,13 +1,14 @@
 import React from "react"
-import logoImage from "../resources/logo.png"
+import logoImage from "../../resources/logo.png"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
-import AllBooksPage from "./AllBooksPage";
-import Tabs from "./Tabs";
-import YourBooksPage from "./YourBooksPage";
-import AvailableBooksPage from "./AvailableBooksPage";
-import RentedBooksPage from "./RentedBooksPage";
+import AllBooksPage from "../all-books-page/AllBooksPage";
+import Tabs from "../tabs/Tabs";
+import YourBooksPage from "../your-books-page/YourBooksPage";
+import AvailableBooksPage from "../available-books-page/AvailableBooksPage";
+import RentedBooksPage from "../rented-books-page/RentedBooksPage";
 import { useNavigate } from "react-router-dom";
+import  "./Dashboard.css"
 
 const Dashboard = () => {
     let navigate = useNavigate();

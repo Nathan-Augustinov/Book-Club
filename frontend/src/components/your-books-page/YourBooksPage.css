@@ -1,0 +1,22 @@
+.bookslist {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.div_container{
+    display: flex;
+}
+
+.flex_child{
+    flex: 1;
+}
+
+.btn{
+    color: #D1E7E0;
+    background-color: #46522A;
+    border-radius: 5px;
+    font-size: larger;
+    display: block;
+    padding: 5px;
+    margin: 5px auto;
+}

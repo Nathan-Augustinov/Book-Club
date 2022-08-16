@@ -1,8 +1,9 @@
 import React from "react";
-import Book from "./Book";
-const AllBooksPage = () => {
+import Book from "../book/Book";
+import "./RentedBooksPage.css";
+const RentedBooksPage = () => {
     return (
-        <div className="container bookslist">
+        <div className="bookslist">
                 <div className="div_container">
                     <div className="flex_child">
                         <Book />
@@ -39,4 +40,4 @@ const AllBooksPage = () => {
     );
 }
 
-export default AllBooksPage;
+export default RentedBooksPage;
