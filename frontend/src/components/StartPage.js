@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { useState } from "react";
 import logoImage from "../resources/logo.png"
 import bookshelfImage from "../resources/bookshelf.jpg"
@@ -17,35 +16,56 @@ const StartPage = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const resetForm = () => {
+        setFirstname("");
+        setLastname("");
+        setEmail("");
+        setUsername("");
+        setPassword("");
+        setConfirmPassword("");
+    };
+
+    const Register = async (values) => {
+        const response = await fetch("http://localhost:8080/api/users/register", {
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(values)
+        });
+
+        if(response && !response.ok){
+            const error = await response.text();
+            alert(error);
+            throw new Error(error);
+        }
+        
+        return response;
+    }
+
     async function handleSubmit(){
         if(password !== confirmPassword){
             alert("Passwords do not match");
             return;
         }
-        try{ 
-            await axios.post("/api/users/register",
-            {
-                firstname: firstname,
-                lastname: lastname,
-                email: email,
-                username: username,
-                password: password
+
+        const values = {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            username: username,
+            password: password
+        };
+
+        Register(values)
+            .then(() => {
+                resetForm();
+                routeChange();
+            })
+            .catch(err => {
+                console.log(err);
             });
-
-            alert("User Registration successfully");
-
-            setFirstname("");
-            setLastname("");
-            setEmail("");
-            setUsername("");
-            setPassword("");
-            setConfirmPassword("");
-
-            routeChange();
-        }
-        catch{
-            alert("User Registration failed");
-        }
     }
     return (
         <div>

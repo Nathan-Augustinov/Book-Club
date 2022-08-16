@@ -1,5 +1,4 @@
 import React from "react"
-import axios from "axios";
 import { useState } from "react";
 import logoImage from "../resources/logo.png"
 import bookshelfImage_part1 from "../resources/bookshelf_part1.png"
@@ -16,24 +15,46 @@ const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const resetForm = () => {
+        setUsername("");
+        setPassword("");
+    };
+
+    const Login = async (values) => {
+        const response = await fetch("http://localhost:8080/api/users/login",{
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(values)
+        });
+
+        if(response && !response.ok){
+            const error = await response.text();
+            alert(error);
+            throw new Error(error);
+        }
+
+        return response.json();
+    }
+
     async function handleSubmit(){
-        try{ 
-            await axios.post("/api/users/login",
-            {
-                username: username,
-                password: password
-            });
 
-            alert("User logged in successfully");
+        const values = {
+            username: username,
+            password: password
+        };
 
-            setUsername("");
-            setPassword("");
-           
-            routeChange();
-        }
-        catch{
-            alert("User log in failed");
-        }
+        Login(values)
+            .then((data)=>{
+                localStorage.setItem("token", data.JWTToken);
+                resetForm();
+                routeChange();
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (

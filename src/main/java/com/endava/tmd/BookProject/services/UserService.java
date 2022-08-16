@@ -94,9 +94,7 @@ public class UserService {
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(jwtConfig.getTokenValidityTimeInHours())))
                 .signWith(jwtConfig.getSecretKeyForSigning())
                 .compact();
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+        
         User user = userRepository.findUserByUsername(authentication.getName());
         user.setToken(token);
         userRepository.saveAndFlush(user);
@@ -110,7 +108,7 @@ public class UserService {
             jsonObject.put("UserLastname", user.getLastname());
             jsonObject.put("UserEmail", user.getEmail());
             jsonObject.put("JWTToken", user.getToken());
-            return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(jsonObject.toString());
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
         }
     }
 
