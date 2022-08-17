@@ -5,8 +5,11 @@ import bookshelfImage_part1 from "../../resources/bookshelf_part1.png"
 import bookshelfImage_part2 from "../../resources/bookshelf_part2.png"
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
+import { useDispatch } from 'react-redux';
+import { login } from "../../redux/actions/allActions";
 
 const LoginPage = () => {
+    const dispatch = useDispatch();
     let navigate = useNavigate();
     const routeChange = () => {
         let path = '../dashboard';
@@ -52,6 +55,7 @@ const LoginPage = () => {
                 localStorage.setItem("token", data.JWTToken);
                 resetForm();
                 routeChange();
+                dispatch(login(data));
             })
             .catch(err => {
                 console.log(err);

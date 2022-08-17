@@ -9,9 +9,16 @@ import AvailableBooksPage from "../available-books-page/AvailableBooksPage";
 import RentedBooksPage from "../rented-books-page/RentedBooksPage";
 import { useNavigate } from "react-router-dom";
 import  "./Dashboard.css"
+import { useDispatch } from 'react-redux';
+import { logout } from "../../redux/actions/allActions";
 
 const Dashboard = () => {
+    const dispatch = useDispatch();
     let navigate = useNavigate();
+    const handleLogout = () => {
+        routeChange();
+        dispatch(logout());
+    }
     const routeChange = () => {
         let path = '/';
         navigate(path);
@@ -35,7 +42,7 @@ const Dashboard = () => {
                         )
                     }}
                 />
-                <button type="submit" className="logout_btn" onClick={routeChange}>Logout</button>
+                <button type="submit" className="logout_btn" onClick={handleLogout}>Logout</button>
             </div>
             <div>
                 <Tabs>
