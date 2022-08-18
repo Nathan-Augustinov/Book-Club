@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtTokenVerifier(jwtConfig), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers( "/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/users/register", "/api/users/login").permitAll()
+                .antMatchers("/api/users/register", "/api/users/login", "/api/users/verifyToken").permitAll()
                 .antMatchers("/swagger-ui/**","/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**")
                 .permitAll()
                 .anyRequest()

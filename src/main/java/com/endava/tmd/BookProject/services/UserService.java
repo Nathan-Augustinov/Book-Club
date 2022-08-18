@@ -6,6 +6,8 @@ import com.endava.tmd.BookProject.jwt.UsernameAndPasswordAuthenticationRequest;
 import com.endava.tmd.BookProject.models.User;
 import com.endava.tmd.BookProject.repositories.UserRepository;
 import com.endava.tmd.BookProject.utils.Utils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.json.JSONObject;
 import org.springframework.beans.BeanUtils;
@@ -102,13 +104,7 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not found");
         }
         else{
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("Username", user.getUsername());
-            jsonObject.put("UserFirstname", user.getFirstname());
-            jsonObject.put("UserLastname", user.getLastname());
-            jsonObject.put("UserEmail", user.getEmail());
-            jsonObject.put("JWTToken", user.getToken());
-            return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
+            return ResponseEntity.status(HttpStatus.OK).body(user);
         }
     }
 
@@ -127,4 +123,18 @@ public class UserService {
     }
 
 
+    public ResponseEntity<?> verifyToken(String token) {
+        Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(jwtConfig.getSecretKeyForSigning()).build().parseClaimsJws(token);
+        Claims body = claimsJws.getBody();
+        User user = userRepository.findUserByToken(token);
+        if(user == null){
+            return null;
+        }
+        if(body.getExpiration().getTime() < System.currentTimeMillis()){
+            return null;
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+    }
 }

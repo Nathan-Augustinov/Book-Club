@@ -69,4 +69,12 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestParam("userId") Long userId, @RequestBody User user){
         return userService.updateUser(userId,user);
     }
+
+    @ApiOperation(
+            value = "Verify user authentication token",
+            notes = "Verifies the user's authentication token")
+    @RequestMapping(value="/verifyToken", method = RequestMethod.GET)
+    public ResponseEntity<?> verifyToken(@RequestParam("token") String token){
+        return userService.verifyToken(token);
+    }
 }

@@ -1,4 +1,4 @@
-import loggedReducer from "./isLogged";
+import loggedReducer from "./userReducer";
 
 import { combineReducers } from "@reduxjs/toolkit";
 

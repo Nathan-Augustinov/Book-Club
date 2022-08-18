@@ -16,7 +16,7 @@ const BookPage = () => {
                     InputProps={{
                         className: "searchBar",
                         endAdornment: (
-                        <InputAdornment>
+                        <InputAdornment position='start'>
                             <IconButton>
                             <SearchIcon />
                             </IconButton>

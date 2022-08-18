@@ -6,7 +6,7 @@ import bookshelfImage_part2 from "../../resources/bookshelf_part2.png"
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import { useDispatch } from 'react-redux';
-import { login } from "../../redux/actions/allActions";
+import { loginUser } from "../../redux/reducers/userReducer";
 
 const LoginPage = () => {
     const dispatch = useDispatch();
@@ -52,10 +52,10 @@ const LoginPage = () => {
 
         Login(values)
             .then((data)=>{
-                localStorage.setItem("token", data.JWTToken);
+                localStorage.setItem("token", data.token);
                 resetForm();
                 routeChange();
-                dispatch(login(data));
+                dispatch(loginUser(data));
             })
             .catch(err => {
                 console.log(err);

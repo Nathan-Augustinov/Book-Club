@@ -10,14 +10,14 @@ import RentedBooksPage from "../rented-books-page/RentedBooksPage";
 import { useNavigate } from "react-router-dom";
 import  "./Dashboard.css"
 import { useDispatch } from 'react-redux';
-import { logout } from "../../redux/actions/allActions";
+import { logoutUser } from "../../redux/reducers/userReducer";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
     const handleLogout = () => {
         routeChange();
-        dispatch(logout());
+        dispatch(logoutUser());
     }
     const routeChange = () => {
         let path = '/';
@@ -34,7 +34,7 @@ const Dashboard = () => {
                     InputProps={{
                         className: "searchBar",
                         endAdornment: (
-                        <InputAdornment>
+                        <InputAdornment position="start">
                             <IconButton>
                             <SearchIcon />
                             </IconButton>
