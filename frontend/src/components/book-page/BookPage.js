@@ -4,8 +4,22 @@ import bookshelfImage from "../../resources/bookshelf.jpg"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
 import "./BookPage.css";
+import { useDispatch } from 'react-redux';
+import { logoutUser } from "../../redux/reducers/userReducer";
+import { useNavigate } from "react-router-dom";
 
 const BookPage = () => {
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+    const handleLogout = () => {
+        routeChange();
+        localStorage.removeItem('token');
+        dispatch(logoutUser());
+    }
+    const routeChange = () => {
+        let path = '/';
+        navigate(path);
+    }
     return (
         <div>
            <div className="dashboardHeader">
@@ -24,7 +38,7 @@ const BookPage = () => {
                         )
                     }}
                 />
-                <button type="submit" className="logout_btn">Logout</button>
+                <button type="submit" className="logout_btn" onClick={handleLogout}>Logout</button>
             </div>
             <div className="book div_container">
                 <div className="col-md-4 bookpage_image flex_child ">

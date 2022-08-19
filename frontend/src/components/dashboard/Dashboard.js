@@ -17,6 +17,7 @@ const Dashboard = () => {
     let navigate = useNavigate();
     const handleLogout = () => {
         routeChange();
+        localStorage.removeItem('token');
         dispatch(logoutUser());
     }
     const routeChange = () => {

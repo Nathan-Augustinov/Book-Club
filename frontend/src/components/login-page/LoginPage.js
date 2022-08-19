@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useState } from "react";
 import logoImage from "../../resources/logo.png"
 import bookshelfImage_part1 from "../../resources/bookshelf_part1.png"
@@ -61,6 +61,13 @@ const LoginPage = () => {
                 console.log(err);
             })
     }
+
+    useEffect(()=>{
+        let token = localStorage.getItem('token');
+        if(token && token !== undefined){
+            navigate("/dashboard");
+        }
+    })
 
     return (
         <div>
