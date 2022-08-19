@@ -67,7 +67,7 @@ const LoginPage = () => {
         if(token && token !== undefined){
             navigate("/dashboard");
         }
-    })
+    }, [])
 
     return (
         <div>
