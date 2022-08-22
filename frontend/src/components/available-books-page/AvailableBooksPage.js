@@ -37,43 +37,13 @@ const AvailableBooksPage = () => {
 
     return (
         <div className="bookslist">
-            {/* <div className="div_container">
-                <div className="flex_child">
-                    <Book />
-                </div>
-                <div className="flex_child">
-                    <Book />
-                </div>
+            <div className="wrapper">
+                {availableBooks.map(availableBook => (
+                    <div key={availableBook.usersBooks.book.bookId} className="flex_child">
+                        <Book id={availableBook.usersBooks.book.bookId}/>
+                    </div>
+                ))}
             </div>
-            <div className="div_container">
-                <div className="flex_child">
-                    <Book />
-                </div>
-                <div className="flex_child">
-                    <Book/>
-                </div>
-            </div>
-            <div className="div_container">
-                <div className="flex_child">
-                    <Book />
-                </div>
-                <div className="flex_child">
-                    <Book />
-                </div>
-            </div>
-            <div className="div_container">
-                <div className="flex_child">
-                    <Book />
-                </div>
-                <div className="flex_child">
-                    <Book />
-                </div>
-            </div> */}
-            {availableBooks.map(availableBook => (
-                <div key={availableBook.usersBooks.book.bookId} className="flex_child">
-                    <Book id={availableBook.usersBooks.book.bookId}/>
-                </div>
-            ))}
         </div>
     );
 }

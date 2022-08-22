@@ -40,27 +40,13 @@ const AllBooksPage = () => {
 
     return (
         <div className="bookslist">
-            {/* {containers} */}
-            {/* <div className="div_container">
-                <div className="flex_child">
-                    <Book />
-                </div>
-                <div className="flex_child">
-                    <Book />
-                </div>
-            </div> */}
-            {books.map(book => (
-                <div key={book.bookId} className="flex_child">
-                    <Book id={book.bookId}/>
-                </div>
-            ))}
-            {/* {books.map(firstBook => (
-                <div className="div_container">
-                    <div className="flex_child">
-                        <Book id={firstBook.bookId}/>
+            <div className="wrapper">
+                {books.map(book => (
+                    <div key={book.bookId} className="flex_child">
+                        <Book id={book.bookId}/>
                     </div>
-                </div>
-            ))} */}
+                ))}
+            </div>
         </div>
     );
 }

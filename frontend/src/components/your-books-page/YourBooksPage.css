@@ -3,10 +3,6 @@
     margin-bottom: 15px;
 }
 
-.div_container{
-    display: flex;
-}
-
 .flex_child{
     flex: 1;
 }
@@ -19,4 +15,12 @@
     display: block;
     padding: 5px;
     margin: 5px auto;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }

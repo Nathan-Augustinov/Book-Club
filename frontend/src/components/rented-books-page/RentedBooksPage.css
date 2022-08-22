@@ -3,10 +3,6 @@
     margin-bottom: 15px;
 }
 
-.div_container{
-    display: flex;
-}
-
 .flex_child{
     flex: 1;
 }
