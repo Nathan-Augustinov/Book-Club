@@ -4,6 +4,7 @@ import allBooksReducer from './allBooksReducer';
 import bookSelectedReducer from './bookSelectedReducer';
 import yourBooksReducer from './yourBooksReducer';
 import availableBooksReducer from './availableBooksReducer';
+import rentedBooksReducer from './rentedBooksReducer';
 
 const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
         allBooks: allBooksReducer,
         yourBooks: yourBooksReducer,
         availableBooks: availableBooksReducer,
+        rentedBooks: rentedBooksReducer,
         bookSelected: bookSelectedReducer,
     },
     devTools: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
