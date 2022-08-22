@@ -5,7 +5,6 @@ const allBooksReducer = createSlice({
     initialState: [],
     reducers:{
         addAllBooks: (state, action) => {
-            console.log(action.payload);
             return update(state, {$set: action.payload});
         }
     }

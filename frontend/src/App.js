@@ -55,7 +55,7 @@ function App() {
           <Route path="/" element={<StartPage/>} />
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/bookpage" element={<BookPage/>} />
+          <Route path="/bookpage/:id" element={<BookPage/>} />
         </Routes>
   );
 }

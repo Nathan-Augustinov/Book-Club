@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logoImage from "../../resources/logo.png"
 import bookshelfImage from "../../resources/bookshelf.jpg"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
 import "./BookPage.css";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from "../../redux/reducers/userReducer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { bookSelected } from '../../redux/reducers/bookSelectedReducer';
 
 const BookPage = () => {
     const dispatch = useDispatch();
@@ -20,10 +21,40 @@ const BookPage = () => {
         let path = '/';
         navigate(path);
     }
+    const {id} = useParams();
+    const token = localStorage.getItem('token');
+
+    const fetchBook = async () => {
+        const response = await fetch(`http://localhost:8080/api/books/${encodeURIComponent(id)}`, {
+            method: "GET",
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': "Bearer " + token,
+            },
+        });
+
+        if(response && !response.ok){
+            const error = await response.text();
+            throw new Error(error);
+        }
+
+        return response.json();
+    };
+    useEffect(()=>{
+        const getBook = async ()=>{
+            const data = await fetchBook();
+            dispatch(bookSelected(data));
+        };
+
+        getBook();
+    },[])
+
+    const selectedBook = useSelector(state => state.bookSelected);
     return (
         <div>
            <div className="dashboardHeader">
-                <img className="logoImage" src={logoImage} alt=""/>
+                <img className="logoImage" src={logoImage} alt="" onClick={()=>{navigate('/dashboard')}}/>
                 <TextField
                     className="searchDiv"
                     label="Search books"
@@ -46,16 +77,16 @@ const BookPage = () => {
                 </div>
                 <div className="col-md-6 bookpage_details flex_child">
                     <div className="book_title">
-                        <p><b>Title: </b>Baltagul</p>
+                        <p><b>Title: </b>{selectedBook ? selectedBook.title : ""}</p>
                     </div>
                     <div className="book_author">
-                        <p><b>Author: </b>Mihail Sadoveanu</p>
+                        <p><b>Author: </b>{selectedBook ? selectedBook.author : ""}</p>
                     </div>
                     <div className="book_description">
-                        <p><b>Book's description: </b>Description</p>
+                        <p><b>Book's description: </b>{selectedBook ? selectedBook.description : ""}</p>
                     </div>
                     <div className="book_published_date">
-                        <p><b>Book's published date: </b>09.08.2022</p>
+                        <p><b>Book's published date: </b>{selectedBook ? selectedBook.publishedDate : ""}</p>
                     </div>
                     <div className='div_container'>
                         <div className='flex_child'>

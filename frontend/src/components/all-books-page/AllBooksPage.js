@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Book from "../book/Book";
 import "./AllBooksPage.css";
 import { addAllBooks } from "../../redux/reducers/allBooksReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const AllBooksPage = () => {
 
     const token = localStorage.getItem('token');
@@ -19,7 +19,6 @@ const AllBooksPage = () => {
 
         if(response && !response.ok){
             const error = await response.text();
-            //alert(error);
             throw new Error(error);
         }
 
@@ -27,12 +26,6 @@ const AllBooksPage = () => {
     };
     const dispatch = useDispatch();
     useEffect(()=>{
-        // getBooks()
-        //     .then(res => {
-        //         console.log(res);
-        //         dispatch(addAllBooks(res));
-        //     })
-        //     .catch(err => console.log(err));
 
         const getBooks = async ()=>{
             const data = await fetchBooks();
@@ -42,41 +35,33 @@ const AllBooksPage = () => {
         getBooks();
     },[]);
 
+    const books = useSelector(state => state.allBooks);
+    
+
     return (
         <div className="bookslist">
+            {/* {containers} */}
+            {/* <div className="div_container">
+                <div className="flex_child">
+                    <Book />
+                </div>
+                <div className="flex_child">
+                    <Book />
+                </div>
+            </div> */}
+            {books.map(book => (
+                <div key={book.bookId} className="flex_child">
+                    <Book id={book.bookId}/>
+                </div>
+            ))}
+            {/* {books.map(firstBook => (
                 <div className="div_container">
                     <div className="flex_child">
-                        <Book />
-                    </div>
-                    <div className="flex_child">
-                        <Book />
+                        <Book id={firstBook.bookId}/>
                     </div>
                 </div>
-                {/* <div className="div_container">
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                    <div className="flex_child">
-                        <Book/>
-                    </div>
-                </div>
-                <div className="div_container">
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                </div>
-                <div className="div_container">
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                    <div className="flex_child">
-                        <Book />
-                    </div>
-                </div> */}
-            </div>
+            ))} */}
+        </div>
     );
 }
 
