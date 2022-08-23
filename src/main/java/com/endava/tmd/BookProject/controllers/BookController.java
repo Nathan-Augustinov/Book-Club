@@ -66,17 +66,28 @@ public class BookController {
         return bookService.updateBook(bookId, book);
     }
 
+//    @ApiOperation(
+//            value = "Find books by title or author",
+//            notes = "Returns the books with the title or author specified")
+//    @RequestMapping(
+//            value = "/titleOrAuthor",
+//            method = RequestMethod.GET)
+//    public List<Book> getBooksByTitleOrAuthor(
+//            @RequestParam(value = "title") @ApiParam(name="title", value="Book's title", example = "Dupa 20 de ani") Optional<String> title,
+//            @RequestParam(value = "author") @ApiParam(name="author", value="Book's author", example = "Alexandre Dumas") Optional<String> author){
+//        return bookService.getBooksByTitleOrAuthor(title,author);
+//    }
     @ApiOperation(
             value = "Find books by title or author",
             notes = "Returns the books with the title or author specified")
     @RequestMapping(
-            value = "/titleOrAuthor",
+            value = "/titleOrAuthor/{searchInput}",
             method = RequestMethod.GET)
-    public List<Book> getBooksByTitleOrAuthor(
-            @RequestParam(value = "title") @ApiParam(name="title", value="Book's title", example = "Dupa 20 de ani") Optional<String> title,
-            @RequestParam(value = "author") @ApiParam(name="author", value="Book's author", example = "Alexandre Dumas") Optional<String> author){
-        return bookService.getBooksByTitleOrAuthor(title,author);
+    public List<Book> getBooksByTitleOrAuthor(@PathVariable @ApiParam(name="titleOrAuthor", value="Title or author search input", example = "baltagul") String searchInput){
+        return bookService.getBooksByTitleOrAuthor(searchInput);
     }
+
+
 
     @ApiOperation(
             value = "A user can create a book",

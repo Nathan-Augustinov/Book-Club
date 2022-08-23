@@ -71,8 +71,12 @@ public class BookService {
                 .body("Book successfully updated!");
     }
 
-    public List<Book> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author){
-        return bookRepository.getBooksByTitleOrAuthor(title,author);
+//    public List<Book> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author){
+//        return bookRepository.getBooksByTitleOrAuthor(title,author);
+//    }
+
+    public List<Book> getBooksByTitleOrAuthor(String searchInput){
+        return bookRepository.getBooksByTitleOrAuthor(searchInput);
     }
 
     public ResponseEntity<?> createBookWithUserId(Long userId, Book book){

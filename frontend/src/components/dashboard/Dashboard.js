@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import logoImage from "../../resources/logo.png"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
@@ -13,8 +13,10 @@ import { useDispatch } from 'react-redux';
 import { logoutUser } from "../../redux/reducers/userReducer";
 
 const Dashboard = () => {
+    const [searchInput, setSearchInput] = useState("");
     const dispatch = useDispatch();
     let navigate = useNavigate();
+
     const handleLogout = () => {
         routeChange();
         localStorage.removeItem('token');
@@ -25,19 +27,24 @@ const Dashboard = () => {
         navigate(path);
     }
 
+    const handleSearch = () =>{
+        navigate(`/searchedBooks/${searchInput}`);
+    }
+
     return (
         <div>
             <div className="dashboardHeader">
-                <img className="logoImage" src={logoImage} alt=""/>
+                <img className="logoImage" src={logoImage} alt="" onClick={()=>{navigate('/dashboard')}}/>
                 <TextField
                     className="searchDiv"
-                    label="Search books"
+                    label="Search books by title or author"
+                    onChange={(e) => setSearchInput(e.target.value)}
                     InputProps={{
                         className: "searchBar",
                         endAdornment: (
-                        <InputAdornment position="start">
-                            <IconButton>
-                            <SearchIcon />
+                        <InputAdornment position="end" style={{"marginLeft": "15px"}}>
+                            <IconButton onClick={handleSearch}>
+                                <SearchIcon />
                             </IconButton>
                         </InputAdornment>
                         )

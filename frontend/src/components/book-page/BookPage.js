@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState} from 'react';
 import logoImage from "../../resources/logo.png"
 import bookshelfImage from "../../resources/bookshelf.jpg"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { bookSelected } from '../../redux/reducers/bookSelectedReducer';
 
 const BookPage = () => {
+    const [searchInput, setSearchInput] = useState("");
     const dispatch = useDispatch();
     let navigate = useNavigate();
     const handleLogout = () => {
@@ -51,19 +52,24 @@ const BookPage = () => {
     },[])
 
     const selectedBook = useSelector(state => state.bookSelected);
+
+    const handleSearch = () =>{
+        navigate(`/searchedBooks/${searchInput}`);
+    }
     return (
         <div>
            <div className="dashboardHeader">
                 <img className="logoImage" src={logoImage} alt="" onClick={()=>{navigate('/dashboard')}}/>
                 <TextField
                     className="searchDiv"
-                    label="Search books"
+                    label="Search books by title or author"
+                    onChange={(e) => setSearchInput(e.target.value)}
                     InputProps={{
                         className: "searchBar",
                         endAdornment: (
-                        <InputAdornment position='start'>
-                            <IconButton>
-                            <SearchIcon />
+                        <InputAdornment position="end" style={{"marginLeft": "15px"}}>
+                            <IconButton onClick={handleSearch}>
+                                <SearchIcon />
                             </IconButton>
                         </InputAdornment>
                         )

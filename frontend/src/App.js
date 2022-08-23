@@ -4,6 +4,7 @@ import StartPage from './components/start-page/StartPage';
 import LoginPage from './components/login-page/LoginPage'; 
 import Dashboard from './components/dashboard/Dashboard';
 import BookPage from './components/book-page/BookPage';
+import SearchedBooksPage from './components/searched-books-page/SearchedBooksPage'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
@@ -56,6 +57,7 @@ function App() {
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/bookpage/:id" element={<BookPage/>} />
+          <Route path="/searchedBooks/:searchInput" element={<SearchedBooksPage/>} />
         </Routes>
   );
 }

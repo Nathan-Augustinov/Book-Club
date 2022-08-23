@@ -1,0 +1,60 @@
+.dashboardHeader{
+    width: 100%;
+    height: 75px;
+    background: #46522A;
+
+}
+
+.dashboardHeader > img {
+    margin-left: 30%;
+}
+
+.logoImage {
+    width: 75px;
+    height: 75px;
+}
+
+.searchDiv{
+    float: left;
+}
+  
+.searchDiv > label {
+    color: #46522A;
+}
+
+.searchBar{
+    height: 45px;
+    margin-top: 15px;
+    margin-left: 10px;
+    border-radius: 5px;
+    color: #46522A;
+    background-color: #D1E7E0;
+}
+
+.logout_btn{
+    height: 45px;
+    color: #46522A;
+    background-color: #D1E7E0;
+    border-radius: 5px;
+    font-size: larger;
+    float: right;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+.bookslist {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.flex_child{
+    flex: 1;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
