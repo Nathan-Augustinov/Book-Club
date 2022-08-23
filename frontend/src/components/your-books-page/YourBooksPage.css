@@ -3,6 +3,10 @@
     margin-bottom: 15px;
 }
 
+.div_container{
+    display: flex;
+}
+
 .flex_child{
     flex: 1;
 }
@@ -23,4 +27,37 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.register_form{
+    background-color: white;
+    
+    margin-top: 3vh;
+    width:50%;
+    float:left;
+    padding: 20px; 
+    text-align: center
+}
+
+.addBookMessage{
+    color: #46522A;
+    font-weight: bold;
+}
+
+.form_label{
+    display: block;
+    font-size: larger;
+    color: #46522A;
+    padding: 4px;
+}
+
+.form_input{
+    font-size: larger;
+    padding: 4px;
+    margin: 2px;
+}
+
+.image > input {
+    margin-left: 9vh;
+    margin-bottom: 2vh;
 }
