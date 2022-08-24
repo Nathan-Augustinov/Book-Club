@@ -38,6 +38,10 @@ public class Book {
             nullable = false)
     private LocalDate publishedDate;
 
+    @Column(name="image",
+            nullable = false)
+    private String image;
+
     public Long getBookId() {
         return bookId;
     }

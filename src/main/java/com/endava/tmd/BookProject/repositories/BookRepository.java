@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-//    List<Book> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author);
     @Query("select b from Book b where b.author = :searchInput or b.title = :searchInput")
     List<Book> getBooksByTitleOrAuthor(String searchInput);
 
