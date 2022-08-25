@@ -13,6 +13,11 @@
     margin-left: 5px;
 }
 
+.book_image > img{
+    height: 150px;
+    width: 150px;
+}
+
 .flex_child{
     flex: 1;
 }

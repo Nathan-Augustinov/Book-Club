@@ -1,5 +1,6 @@
 package com.endava.tmd.BookProject.controllers;
 
+import com.endava.tmd.BookProject.cloudinary.CloudinaryService;
 import com.endava.tmd.BookProject.config.SwaggerConfig;
 import com.endava.tmd.BookProject.models.Book;
 import com.endava.tmd.BookProject.services.BookService;
@@ -9,8 +10,11 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -76,16 +80,18 @@ public class BookController {
         return bookService.getBooksByTitleOrAuthor(searchInput);
     }
 
-
-
     @ApiOperation(
             value = "A user can create a book",
             notes = "The user with the id specified creates a new book with the request body contents")
     @RequestMapping(
-            value = "/addBookByUserId",
-            method = RequestMethod.POST)
-    public ResponseEntity<?> createBookWithUserId(@RequestParam(value= "userId") @ApiParam(name="userId", value="User's id", example = "1")Long userId, @RequestBody Book book){
-        return bookService.createBookWithUserId(userId, book);
+            value = "/addBookByUserId/{userId}",
+            method = RequestMethod.POST,
+            consumes = { MediaType.APPLICATION_JSON_VALUE,
+                        MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<?> createBookWithUserId(@PathVariable(value= "userId") Long userId,
+                                                  @RequestPart("book") Book book,
+                                                  @RequestPart("image") MultipartFile image){
+        return bookService.createBookWithUserId(userId, book, image);
     }
 
     @ApiOperation(

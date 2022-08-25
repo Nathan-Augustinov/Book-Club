@@ -1,6 +1,7 @@
 package com.endava.tmd.BookProject.services;
 
 
+import com.endava.tmd.BookProject.cloudinary.CloudinaryService;
 import com.endava.tmd.BookProject.models.Book;
 import com.endava.tmd.BookProject.models.ForRentBook;
 import com.endava.tmd.BookProject.models.User;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,13 +37,16 @@ public class BookService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    public CloudinaryService cloudinaryService;
+
     public List<Book> getAllBooks(){
         return bookRepository.findAll();
     }
 
     public Object getBookById(Long bookId){
         Book book = bookRepository.findById(bookId).orElse(null);
-        if(book == null){
+        if(book == null) {
             return ResponseEntity
                     .status(HttpStatus.NO_CONTENT)
                     .body("");
@@ -75,7 +80,7 @@ public class BookService {
         return bookRepository.getBooksByTitleOrAuthor(searchInput);
     }
 
-    public ResponseEntity<?> createBookWithUserId(Long userId, Book book){
+    public ResponseEntity<?> createBookWithUserId(Long userId, Book book, MultipartFile image){
         if(!checkIfSameUserAlreadyAddedSameBook(userId, book)){
             User user = userRepository.findById(userId).orElse(null);
             if(user == null){
@@ -83,6 +88,8 @@ public class BookService {
                         .status(HttpStatus.BAD_REQUEST)
                         .body("User id given is not a correct one!");
             }
+            String imageUrl = cloudinaryService.uploadFile(image);
+            book.setImage(imageUrl);
             bookRepository.saveAndFlush(book);
             UsersBooks entry = new UsersBooks(null,user,book);
             usersBooksRepository.saveAndFlush(entry);

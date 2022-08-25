@@ -1,6 +1,5 @@
 import React, { useEffect, useState} from 'react';
 import logoImage from "../../resources/logo.png"
-import bookshelfImage from "../../resources/bookshelf.jpg"
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
 import "./BookPage.css";
@@ -45,6 +44,7 @@ const BookPage = () => {
     useEffect(()=>{
         const getBook = async ()=>{
             const data = await fetchBook();
+            console.log(data.publishedDate);
             dispatch(bookSelected(data));
         };
 
@@ -79,7 +79,7 @@ const BookPage = () => {
             </div>
             <div className="book div_container">
                 <div className="col-md-4 bookpage_image flex_child ">
-                    <img src={bookshelfImage} alt=""/>
+                    <img src={selectedBook ? selectedBook.image : null} alt=""/>
                 </div>
                 <div className="col-md-6 bookpage_details flex_child">
                     <div className="book_title">

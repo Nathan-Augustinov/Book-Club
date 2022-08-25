@@ -59,6 +59,7 @@
 
 .bookpage_image > img{
     height: 85vh;
+    max-width: 85vh;
     margin-left: 10px;
 }
 
