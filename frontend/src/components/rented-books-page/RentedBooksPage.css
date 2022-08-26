@@ -5,4 +5,5 @@
 
 .flex_child{
     flex: 1;
+    width: 500px;
 }
