@@ -1,6 +1,8 @@
 package com.endava.tmd.BookProject.models;
 
+import com.endava.tmd.BookProject.config.DateConfig;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -91,6 +93,7 @@ public class User {
         return userId;
     }
 
+    @JsonSerialize(using = DateConfig.class)
     public Date getCreatedOn() {
         return createdOn;
     }

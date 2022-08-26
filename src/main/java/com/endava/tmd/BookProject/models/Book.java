@@ -1,5 +1,7 @@
 package com.endava.tmd.BookProject.models;
 
+import com.endava.tmd.BookProject.config.LocalDateConfig;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -70,6 +72,7 @@ public class Book {
         this.description = description;
     }
 
+    @JsonSerialize(using = LocalDateConfig.class)
     public LocalDate getPublishedDate() {
         return publishedDate;
     }
