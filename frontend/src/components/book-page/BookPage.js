@@ -10,6 +10,7 @@ import { bookSelected } from '../../redux/reducers/bookSelectedReducer';
 
 const BookPage = () => {
     const [searchInput, setSearchInput] = useState("");
+    const [rentOption, setRentOption] = useState("");
     const dispatch = useDispatch();
     let navigate = useNavigate();
     const handleLogout = () => {
@@ -44,7 +45,6 @@ const BookPage = () => {
     useEffect(()=>{
         const getBook = async ()=>{
             const data = await fetchBook();
-            console.log(data.publishedDate);
             dispatch(bookSelected(data));
         };
 
@@ -52,10 +52,15 @@ const BookPage = () => {
     },[])
 
     const selectedBook = useSelector(state => state.bookSelected);
+    const user = useSelector(state => state.user);
+    const userId = user ? user.userId : null;
+
 
     const handleSearch = () =>{
         navigate(`/searchedBooks/${searchInput}`);
     }
+
+    const rentOptions = ["One week", "Two weeks", "Three weeks", "One month"];
     return (
         <div>
            <div className="dashboardHeader">
@@ -94,13 +99,18 @@ const BookPage = () => {
                     <div className="book_published_date">
                         <p><b>Book's published date: </b>{selectedBook ? selectedBook.publishedDate : ""}</p>
                     </div>
-                    <div className='div_container'>
-                        <div className='flex_child'>
+                    <div className='rent'>
+                        <div className='rent_options'>
+                            {rentOptions.map((item, index) => (
+                                <div key={index}>
+                                    <input value={item} type="checkbox"/>
+                                    <span>{item}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div>
                             <button type="submit" className="btn">Rent</button>
                         </div>
-                        {/* <div className='flex_child'>
-                            <button type="submit" className="btn">Extend rent period</button>
-                        </div> */}
                     </div>       
                 </div> 
             </div>

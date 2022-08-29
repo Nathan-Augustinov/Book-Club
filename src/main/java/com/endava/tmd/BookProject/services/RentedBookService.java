@@ -45,7 +45,7 @@ public class RentedBookService {
                 rentedBookRepository.delete(rentedBook);
                 Long waitingListId = waitingListRepository.getFirstByUsersBooks(usersBooks).getWaitingListId();
                 Long nextUserId = waitingListRepository.getFirstByUsersBooks(usersBooks).getUser().getUserId();
-                forRentBookService.rentBook(forRentBookId,nextUserId);
+                forRentBookService.rentBook(forRentBookId,nextUserId, RentPeriod.ONE_WEEK);
                 waitingListRepository.deleteById(waitingListId);
             }
         }

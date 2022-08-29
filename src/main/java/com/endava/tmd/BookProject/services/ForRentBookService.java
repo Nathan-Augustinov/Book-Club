@@ -74,15 +74,15 @@ public class ForRentBookService {
         waitingListRepository.saveAndFlush(newWaitingListEntry);
     }
 
-    public void addIntoTheRentedBooks(ForRentBook forRentBook, User rentingUser){
-        RentPeriod newRentPeriod = RentPeriod.ONE_MONTH;
-        forRentBookRepository.updateRentPeriod(newRentPeriod,forRentBook.getForRentBookId());
-        RentedBook newRentedBook = new RentedBook(null,forRentBook,rentingUser, LocalDate.now().plus(ForRentBookService.transformRentPeriodInTime(newRentPeriod)));
+    public void addIntoTheRentedBooks(ForRentBook forRentBook, User rentingUser, RentPeriod rentPeriod){
+//        RentPeriod newRentPeriod = RentPeriod.ONE_MONTH;
+        forRentBookRepository.updateRentPeriod(rentPeriod,forRentBook.getForRentBookId());
+        RentedBook newRentedBook = new RentedBook(null,forRentBook,rentingUser, LocalDate.now().plus(ForRentBookService.transformRentPeriodInTime(rentPeriod)));
         rentedBookRepository.saveAndFlush(newRentedBook);
         forRentBookRepository.updateAvailabilityStatus(forRentBook.getForRentBookId());
     }
 
-    public ResponseEntity<?> rentBook(Long forRentBookId, Long rentingUserId){
+    public ResponseEntity<?> rentBook(Long forRentBookId, Long rentingUserId, RentPeriod rentPeriod){
         ForRentBook forRentBook = forRentBookRepository.findById(forRentBookId).orElse(null);
         User rentingUser = userRepository.findById(rentingUserId).orElse(null);
         if(forRentBook == null){
@@ -115,7 +115,7 @@ public class ForRentBookService {
                     .body("User is on the waiting list for borrowing the book.");
         }
         else{
-            addIntoTheRentedBooks(forRentBook, rentingUser);
+            addIntoTheRentedBooks(forRentBook, rentingUser, rentPeriod);
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("User successfully rented the book.");

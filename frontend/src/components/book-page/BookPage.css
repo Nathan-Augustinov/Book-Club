@@ -64,14 +64,7 @@
 }
 
 .bookpage_details{
-    margin-left: 22%;
-}
-
-.bookpage_details > .div_container{
-    position:fixed;
-    bottom: 0;
-    margin-left: 6%;
-    margin-bottom: 15px;
+    margin-left:25%;
 }
 
 .book_title{
@@ -102,5 +95,19 @@
     display: block;
     padding: 5px;
     margin: 5px auto; 
-    
+}
+
+.rent{
+    position:fixed;
+    bottom: 0;
+    margin-bottom: 15px;
+}
+
+.rent_options{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
