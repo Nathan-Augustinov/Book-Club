@@ -13,6 +13,9 @@ import { addAvailableBooks } from '../../redux/reducers/availableBooksReducer';
 const BookPage = () => {
     const [searchInput, setSearchInput] = useState("");
     const [rentOption, setRentOption] = useState("");
+    const [rentOptionIsChecked, setRentOptionIsChecked] = useState(false);
+    const [extendRentOption, setExtendRentOption] = useState("");
+    const [extendRentOptionIsChecked, setExtendRentOptionIsChecked] = useState(false);
     const dispatch = useDispatch();
     let navigate = useNavigate();
     const handleLogout = () => {
@@ -118,8 +121,78 @@ const BookPage = () => {
         navigate(`/searchedBooks/${searchInput}`);
     }
 
+    const onRentInputSelected = (e, item) => {
+        if(e.target.checked){
+            setRentOptionIsChecked(!rentOptionIsChecked);
+            setRentOption(item);
+        }
+        else{
+            setRentOptionIsChecked(!rentOptionIsChecked);
+        }
+    }
+
+    const onExtendRentInputSelected = (e, item) => {
+        if(e.target.checked){
+            setExtendRentOptionIsChecked(!extendRentOptionIsChecked);
+            setExtendRentOption(item);
+        }
+        else{
+            setExtendRentOptionIsChecked(!extendRentOptionIsChecked);
+        }
+    }
+
+    const Rent = async (forRentBookId, rentingUserId, rentPeriod) => {
+        const response = await fetch(`http://localhost:8080/api/forRentBooks/rentBook?forRentBookId=${encodeURIComponent(forRentBookId)}&rentingUserId=${encodeURIComponent(rentingUserId)}`,{
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': "Bearer " + token,
+            },
+            body: JSON.stringify(changeRentOptionName(rentPeriod))
+        });
+
+        if(response && !response.ok){
+            const error = await response.text();
+            alert(error);
+            throw new Error(error);
+        }
+
+        return response;
+    }
+
+    const changeRentOptionName = (rentPeriod) => {
+        if(rentPeriod === "One week"){
+            return "ONE_WEEK";
+        }
+
+        if(rentPeriod === "Two weeks"){
+            return "TWO_WEEKS";
+        }
+
+        if(rentPeriod === "Three weeks"){
+            return "THREE_WEEKS";
+        }
+
+        if(rentPeriod === "One month"){
+            return "ONE_MONTH";
+        }
+    }
+
+    const handleRentButton = async (forRentBookId, rentingUserId, rentPeriod) => {
+
+        Rent(forRentBookId, rentingUserId, rentPeriod)
+            .then((data) => {
+                navigate("/dashboard");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
     const rentOptions = ["One week", "Two weeks", "Three weeks", "One month"];
     const extendRentOptions = ["One week", "Two weeks"];
+
     return (
         <div>
            <div className="dashboardHeader">
@@ -196,17 +269,17 @@ const BookPage = () => {
                     {availableBooks.filter(book => book.usersBooks.book.bookId ===  parseInt(id, 10) 
                                             && book.usersBooks.user.userId !== userId)
                                     .map(book => (
-                        <div className='rent'>
+                        <div key={book.forRentBookId} className='rent'>
                             <div className='rent_options'>
                                 {rentOptions.map((item, index) => (
                                     <div key={index}>
-                                        <input value={item} type="checkbox"/>
+                                        <input value={item} type="checkbox" disabled={rentOptionIsChecked && rentOption !== item ? true : false} onChange={(e) => onRentInputSelected(e,item)}/>
                                         <span>{item}</span>
                                     </div>
                                 ))}
                             </div>
                             <div>
-                                <button type="submit" className="btn">Rent</button>
+                                <button type="submit" className="btn" onClick={(e) => handleRentButton(book.forRentBookId, userId, rentOption)}>Rent</button>
                             </div>
                         </div>     
                     ))}  
@@ -214,11 +287,11 @@ const BookPage = () => {
                     {rentedBooks.filter(rentedBook => rentedBook.forRentBook.usersBooks.book.bookId === parseInt(id, 10) 
                                         && rentedBook.rentUser.userId === userId)
                                 .map(book => (
-                        <div className='rent'>
+                        <div key={book.rentedBookId} className='rent'>
                             <div className='rent_options'>
                                 {extendRentOptions.map((item, index) => (
                                     <div key={index}>
-                                        <input value={item} type="checkbox"/>
+                                        <input value={item} type="checkbox" disabled={extendRentOptionIsChecked && extendRentOption !== item ? true : false} onChange={(e) => onExtendRentInputSelected(e,item)}/>
                                         <span>{item}</span>
                                     </div>
                                 ))}
@@ -233,7 +306,7 @@ const BookPage = () => {
                                         && rentedBook.rentUser.userId !== userId
                                         && rentedBook.forRentBook.usersBooks.user.userId !== userId)
                                 .map(book => (
-                        <div className='rent'>
+                        <div key={book.rentedBookId} className='rent'>
                             <div>
                                 <button type="submit" className="btn">Add yourself on the waiting list</button>
                             </div>
