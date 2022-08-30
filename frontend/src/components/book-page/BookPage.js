@@ -8,6 +8,7 @@ import { logoutUser } from "../../redux/reducers/userReducer";
 import { useNavigate, useParams } from "react-router-dom";
 import { bookSelected } from '../../redux/reducers/bookSelectedReducer';
 import { addAllRentedBooks } from '../../redux/reducers/rentedBooksReducer';
+import { addAvailableBooks } from '../../redux/reducers/availableBooksReducer';
 
 const BookPage = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -61,6 +62,24 @@ const BookPage = () => {
 
         return response.json();
     };
+
+    const fetchAvailableForRentBooks = async () => {
+        const response = await fetch('http://localhost:8080/api/forRentBooks/availableBooks', {
+            method: "GET",
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': "Bearer " + token,
+            },
+        });
+
+        if(response && !response.ok){
+            const error = await response.text();
+            throw new Error(error);
+        }
+
+        return response.json();
+    }
     
     useEffect(()=>{
         const getBook = async ()=>{
@@ -76,12 +95,23 @@ const BookPage = () => {
         };
 
         getRentedBooks();
+
+        const getAvailableBooks = async ()=>{
+            const data = await fetchAvailableForRentBooks();
+            dispatch(addAvailableBooks(data));
+        };
+
+        getAvailableBooks();
+
+
     },[])
 
     const selectedBook = useSelector(state => state.bookSelected);
     const user = useSelector(state => state.user);
     const userId = user ? user.userId : null;
     const rentedBooks = useSelector(state => state.rentedBooks);
+    const searchedBooks = useSelector(state => state.searchedBooks);
+    const availableBooks = useSelector(state => state.availableBooks);
 
 
     const handleSearch = () =>{
@@ -150,6 +180,19 @@ const BookPage = () => {
                                         <p><b>Book's renting user: </b>{rentedBook ? rentedBook.rentUser.username : ""}</p>
                                     </div>
                     ))}
+                    {searchedBooks.filter(searchedBook => searchedBook.bookId === parseInt(id, 10))
+                                    .map(searchedBook => availableBooks.filter(availableBook => availableBook.usersBooks.book.bookId === searchedBook.bookId).map(availableBook => (
+                                        <div key={availableBook.forRentBookId} className="book_availability">
+                                            <p><b>Book's availability: </b>Available</p>
+                                        </div>
+                                    )))}
+                    {searchedBooks.filter(searchedBook => searchedBook.bookId === parseInt(id, 10))
+                                    .map(searchedBook => rentedBooks.filter(rentedBook => rentedBook.forRentBook.usersBooks.book.bookId === searchedBook.bookId).map(rentedBook => (
+                                        <div key={rentedBook.rentedBookId} className="book_availability">
+                                            <p><b>Book's availability: </b>{rentedBook.returnDate}</p>
+                                        </div>
+                                    )))}
+                                    
                     <div className='rent'>
                         <div className='rent_options'>
                             {rentOptions.map((item, index) => (
