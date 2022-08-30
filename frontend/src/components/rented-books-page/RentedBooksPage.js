@@ -34,14 +34,32 @@ const RentedBooksPage = () => {
     },[]);
 
     const rentedBooks = useSelector(state => state.rentedBooks);
+    const user = useSelector(state => state.user);
+    const userId = user.userId;
     return (
         <div className="bookslist">
-            <div className="wrapper">
-                {rentedBooks.map(rentedBook => (
-                    <div key={rentedBook.forRentBook.usersBooks.book.bookId} className="flex_child">
-                        <Book id={rentedBook.forRentBook.usersBooks.book.bookId}/>
+            <div className="div_container">
+                <div className="flex_child">
+                    <h3 className="text">Books rented by you</h3>
+                    <div className="wrapper">
+                        {rentedBooks.filter(rentedBook => rentedBook.rentUser.userId === userId).map(rentedBook => (
+                            <div key={rentedBook.forRentBook.usersBooks.book.bookId} className="flex_child">
+                                <Book id={rentedBook.forRentBook.usersBooks.book.bookId}/>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
+                <div className="flex_child">
+                    <h3 className="text">Your rented books</h3>
+                    <div className="wrapper">
+                        {rentedBooks.filter(rentedBook => rentedBook.forRentBook.usersBooks.user.userId === userId).map(rentedBook => (
+                            <div key={rentedBook.forRentBook.usersBooks.book.bookId} className="flex_child">
+                                <Book id={rentedBook.forRentBook.usersBooks.book.bookId}/>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
             </div>
         </div>
     );

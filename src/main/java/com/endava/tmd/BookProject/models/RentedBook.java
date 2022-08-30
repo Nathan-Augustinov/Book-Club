@@ -1,5 +1,7 @@
 package com.endava.tmd.BookProject.models;
 
+import com.endava.tmd.BookProject.config.LocalDateConfig;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -56,6 +58,7 @@ public class RentedBook {
         this.rentUser = rent_user;
     }
 
+    @JsonSerialize(using = LocalDateConfig.class)
     public LocalDate getReturnDate() {
         return returnDate;
     }

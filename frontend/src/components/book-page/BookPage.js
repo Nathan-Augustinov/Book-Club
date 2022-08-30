@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from "../../redux/reducers/userReducer";
 import { useNavigate, useParams } from "react-router-dom";
 import { bookSelected } from '../../redux/reducers/bookSelectedReducer';
+import { addAllRentedBooks } from '../../redux/reducers/rentedBooksReducer';
 
 const BookPage = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -42,6 +43,25 @@ const BookPage = () => {
 
         return response.json();
     };
+
+    const fetchRentedBooks = async () => {
+        const response = await fetch('http://localhost:8080/api/rentedBooks', {
+            method: "GET",
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': "Bearer " + token,
+            },
+        });
+
+        if(response && !response.ok){
+            const error = await response.text();
+            throw new Error(error);
+        }
+
+        return response.json();
+    };
+    
     useEffect(()=>{
         const getBook = async ()=>{
             const data = await fetchBook();
@@ -49,11 +69,19 @@ const BookPage = () => {
         };
 
         getBook();
+
+        const getRentedBooks = async ()=>{
+            const data = await fetchRentedBooks();
+            dispatch(addAllRentedBooks(data));
+        };
+
+        getRentedBooks();
     },[])
 
     const selectedBook = useSelector(state => state.bookSelected);
     const user = useSelector(state => state.user);
     const userId = user ? user.userId : null;
+    const rentedBooks = useSelector(state => state.rentedBooks);
 
 
     const handleSearch = () =>{
@@ -99,6 +127,29 @@ const BookPage = () => {
                     <div className="book_published_date">
                         <p><b>Book's published date: </b>{selectedBook ? selectedBook.publishedDate : ""}</p>
                     </div>
+                    {rentedBooks.filter(rentedBook => rentedBook.forRentBook.usersBooks.book.bookId === parseInt(id, 10) 
+                                        && rentedBook.rentUser.userId === userId )
+                                .map(rentedBook => (
+                                    <div key={rentedBook.rentedBookId} className="book_return_date">
+                                        <p><b>Book's return date: </b>{rentedBook ? rentedBook.returnDate : ""}</p>
+                                    </div>
+                    ))}
+                    {rentedBooks.filter(rentedBook => rentedBook.forRentBook.usersBooks.book.bookId === parseInt(id, 10) 
+                                        && rentedBook.rentUser.userId !== userId 
+                                        && rentedBook.forRentBook.usersBooks.user.userId === userId)
+                                .map(rentedBook => (
+                                    <div key={rentedBook.rentedBookId} className="book_return_date">
+                                        <p><b>Book's return date: </b>{rentedBook ? rentedBook.returnDate : ""}</p>
+                                    </div>
+                    ))}
+                    {rentedBooks.filter(rentedBook => rentedBook.forRentBook.usersBooks.book.bookId === parseInt(id, 10) 
+                                        && rentedBook.rentUser.userId !== userId 
+                                        && rentedBook.forRentBook.usersBooks.user.userId === userId)
+                                .map(rentedBook => (
+                                    <div key={rentedBook.rentedBookId} className="book_return_date">
+                                        <p><b>Book's renting user: </b>{rentedBook ? rentedBook.rentUser.username : ""}</p>
+                                    </div>
+                    ))}
                     <div className='rent'>
                         <div className='rent_options'>
                             {rentOptions.map((item, index) => (
