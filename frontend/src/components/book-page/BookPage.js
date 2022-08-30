@@ -119,6 +119,7 @@ const BookPage = () => {
     }
 
     const rentOptions = ["One week", "Two weeks", "Three weeks", "One month"];
+    const extendRentOptions = ["One week", "Two weeks"];
     return (
         <div>
            <div className="dashboardHeader">
@@ -192,20 +193,55 @@ const BookPage = () => {
                                             <p><b>Book's availability: </b>{rentedBook.returnDate}</p>
                                         </div>
                                     )))}
-                                    
-                    <div className='rent'>
-                        <div className='rent_options'>
-                            {rentOptions.map((item, index) => (
-                                <div key={index}>
-                                    <input value={item} type="checkbox"/>
-                                    <span>{item}</span>
-                                </div>
-                            ))}
-                        </div>
-                        <div>
-                            <button type="submit" className="btn">Rent</button>
-                        </div>
-                    </div>       
+                    {availableBooks.filter(book => book.usersBooks.book.bookId ===  parseInt(id, 10) 
+                                            && book.usersBooks.user.userId !== userId)
+                                    .map(book => (
+                        <div className='rent'>
+                            <div className='rent_options'>
+                                {rentOptions.map((item, index) => (
+                                    <div key={index}>
+                                        <input value={item} type="checkbox"/>
+                                        <span>{item}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div>
+                                <button type="submit" className="btn">Rent</button>
+                            </div>
+                        </div>     
+                    ))}  
+
+                    {rentedBooks.filter(rentedBook => rentedBook.forRentBook.usersBooks.book.bookId === parseInt(id, 10) 
+                                        && rentedBook.rentUser.userId === userId)
+                                .map(book => (
+                        <div className='rent'>
+                            <div className='rent_options'>
+                                {extendRentOptions.map((item, index) => (
+                                    <div key={index}>
+                                        <input value={item} type="checkbox"/>
+                                        <span>{item}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div>
+                                <button type="submit" className="btn">Extend rent</button>
+                            </div>
+                        </div>     
+                    ))}
+
+                    {rentedBooks.filter(rentedBook => rentedBook.forRentBook.usersBooks.book.bookId === parseInt(id, 10) 
+                                        && rentedBook.rentUser.userId !== userId
+                                        && rentedBook.forRentBook.usersBooks.user.userId !== userId)
+                                .map(book => (
+                        <div className='rent'>
+                            <div>
+                                <button type="submit" className="btn">Add yourself on the waiting list</button>
+                            </div>
+                        </div>     
+                    ))}
+
+
+                      
                 </div> 
             </div>
             
