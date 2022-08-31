@@ -79,8 +79,7 @@ public class RentedBookService {
                 .body(responseList.toString());
     }
 
-    public ResponseEntity<?> extendBookRentPeriod(Long rentedBookId){
-        ExtendRentPeriod extendRentPeriod = ExtendRentPeriod.ONE_WEEK;
+    public ResponseEntity<?> extendBookRentPeriod(Long rentedBookId, ExtendRentPeriod extendRentPeriod){
         RentedBook rentedBook = rentedBookRepository.findById(rentedBookId).orElse(null);
         if(rentedBook == null){
             return ResponseEntity

@@ -6,6 +6,7 @@ import yourBooksReducer from './yourBooksReducer';
 import availableBooksReducer from './availableBooksReducer';
 import rentedBooksReducer from './rentedBooksReducer';
 import searchBooksReducer from './searchBooksReducer';
+import waitingListReducer from './waitingListReducer';
 
 const store = configureStore({
     reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
         rentedBooks: rentedBooksReducer,
         searchedBooks: searchBooksReducer,
         bookSelected: bookSelectedReducer,
+        waitingList: waitingListReducer
     },
     devTools: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   });

@@ -1,6 +1,7 @@
 package com.endava.tmd.BookProject.controllers;
 
 import com.endava.tmd.BookProject.config.SwaggerConfig;
+import com.endava.tmd.BookProject.models.ExtendRentPeriod;
 import com.endava.tmd.BookProject.models.RentedBook;
 import com.endava.tmd.BookProject.services.RentedBookService;
 import io.swagger.annotations.Api;
@@ -46,8 +47,8 @@ public class RentedBookController {
     @RequestMapping(
             value = "/extendBookRentPeriod",
             method = RequestMethod.PUT)
-    public ResponseEntity<?> extendBookRentPeriod(@RequestParam("rentedBookId") Long rentedBookId){
-        return rentedBookService.extendBookRentPeriod(rentedBookId);
+    public ResponseEntity<?> extendBookRentPeriod(@RequestParam("rentedBookId") Long rentedBookId, @RequestBody ExtendRentPeriod extendRentPeriod){
+        return rentedBookService.extendBookRentPeriod(rentedBookId, extendRentPeriod);
     }
 
     @ApiOperation(

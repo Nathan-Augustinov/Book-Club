@@ -190,8 +190,40 @@ const BookPage = () => {
             })
     }
 
+    const ExtendRent = async (rentedBookId, extendRentPeriod) => {
+        const response = await fetch(`http://localhost:8080/api/rentedBooks/extendBookRentPeriod?rentedBookId=${encodeURIComponent(rentedBookId)}`,{
+            method: "PUT",
+            headers:{
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': "Bearer " + token,
+            },
+            body: JSON.stringify(changeRentOptionName(extendRentPeriod))
+        });
+
+        if(response && !response.ok){
+            const error = await response.text();
+            alert(error);
+            throw new Error(error);
+        }
+
+        return response;
+    }
+
+    const handleExtendRentButton = async (rentedBookId, extendRentPeriod) => {
+
+        ExtendRent(rentedBookId, extendRentPeriod)
+            .then((data) => {
+                navigate("/dashboard");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
     const rentOptions = ["One week", "Two weeks", "Three weeks", "One month"];
     const extendRentOptions = ["One week", "Two weeks"];
+    const defaultRentOption = "One week";
 
     return (
         <div>
@@ -297,7 +329,7 @@ const BookPage = () => {
                                 ))}
                             </div>
                             <div>
-                                <button type="submit" className="btn">Extend rent</button>
+                                <button type="submit" className="btn" onClick={(e) => handleExtendRentButton(book.rentedBookId, extendRentOption)}>Extend rent</button>
                             </div>
                         </div>     
                     ))}
@@ -308,7 +340,7 @@ const BookPage = () => {
                                 .map(book => (
                         <div key={book.rentedBookId} className='rent'>
                             <div>
-                                <button type="submit" className="btn">Add yourself on the waiting list</button>
+                                <button type="submit" className="btn" onClick={(e) => handleRentButton(book.forRentBook.forRentBookId, userId, defaultRentOption)}>Add yourself on the waiting list</button>
                             </div>
                         </div>     
                     ))}

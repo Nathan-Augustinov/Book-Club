@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import  "./Dashboard.css"
 import { useDispatch } from 'react-redux';
 import { logoutUser } from "../../redux/reducers/userReducer";
+import WaitingListPage from "../waiting-list/WaitingListPage";
 
 const Dashboard = () => {
     const [searchInput, setSearchInput] = useState("");
@@ -65,6 +66,9 @@ const Dashboard = () => {
                     </div>
                     <div label="Rented Books">
                         <RentedBooksPage />
+                    </div>
+                    <div label="Waiting List">
+                        <WaitingListPage />
                     </div>
                 </Tabs>
             </div>  
