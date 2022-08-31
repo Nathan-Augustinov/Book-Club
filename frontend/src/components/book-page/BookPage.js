@@ -149,7 +149,7 @@ const BookPage = () => {
                 'Accept': 'application/json',
                 'Authorization': "Bearer " + token,
             },
-            body: JSON.stringify(changeRentOptionName(rentPeriod))
+            body: JSON.stringify(rentPeriod.toUpperCase().replace(" ","_"))
         });
 
         if(response && !response.ok){
@@ -159,24 +159,6 @@ const BookPage = () => {
         }
 
         return response;
-    }
-
-    const changeRentOptionName = (rentPeriod) => {
-        if(rentPeriod === "One week"){
-            return "ONE_WEEK";
-        }
-
-        if(rentPeriod === "Two weeks"){
-            return "TWO_WEEKS";
-        }
-
-        if(rentPeriod === "Three weeks"){
-            return "THREE_WEEKS";
-        }
-
-        if(rentPeriod === "One month"){
-            return "ONE_MONTH";
-        }
     }
 
     const handleRentButton = async (forRentBookId, rentingUserId, rentPeriod) => {
@@ -198,7 +180,7 @@ const BookPage = () => {
                 'Accept': 'application/json',
                 'Authorization': "Bearer " + token,
             },
-            body: JSON.stringify(changeRentOptionName(extendRentPeriod))
+            body: JSON.stringify(extendRentPeriod.toUpperCase().replace(" ","_"))
         });
 
         if(response && !response.ok){
